@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard | Sunrise Dental Clinic</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+<header class="topbar">
+
+  <a class="brand-link"
+     th:href="@{/dashboard}">
+
+        <span class="brand-symbol"
+              aria-hidden="true">
+            SD
+        </span>
+
+    <span class="brand-text">
+
+            <strong>Sunrise Dental Clinic</strong>
+
+            <small>Management Portal</small>
+
+        </span>
+
+  </a>
+
+  <div class="topbar-actions">
+
+    <div class="user-summary">
+
+            <span class="user-avatar"
+                  aria-hidden="true">
+                U
+            </span>
+
+      <span class="user-details">
+
+                <strong th:text="${username}">
+                    admin
+                </strong>
+
+                <small th:text="${role}">
+                    ADMIN
+                </small>
+
+            </span>
+
+    </div>
+
+    <form class="logout-form"
+          method="post"
+          th:action="@{/logout}">
+
+      <input type="hidden"
+             name="_csrf"
+             th:value="${_csrf.token}">
+
+      <button class="secondary-button"
+              type="submit">
+
+        Sign out
+
+      </button>
+
+    </form>
+
+  </div>
+
+</header>
+
+<main class="dashboard-container">
+
+  <section class="welcome-card">
+
+    <div>
+
+      <p class="eyebrow">Clinic operations</p>
+
+      <h1>
+        Welcome,
+        <span th:text="${username}">
+                    user
+                </span>.
+      </h1>
+
+      <p>
+        Use this secure workspace to coordinate
+        patient care and daily clinic activities.
+      </p>
+
+    </div>
+
+    <div class="access-badge"
+         th:if="${isAdmin}">
+
+      <span class="status-dot"></span>
+
+      Administrator access enabled
+
+    </div>
+
+  </section>
+
+  <section aria-labelledby="modules-title">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow">Core services</p>
+
+        <h2 id="modules-title">
+          Clinic management modules
+        </h2>
+
+      </div>
+
+      <p>
+        Select a module as development progresses.
+      </p>
+
+    </div>
+
+    <div class="module-grid">
+
+      <article class="module-card">
+
+        <div class="module-icon">PT</div>
+
+        <h3>Patients</h3>
+
+        <p>
+          Register patients and maintain
+          confidential personal information.
+        </p>
+
+        <span class="module-status">
+                    Patient management
+                </span>
+
+      </article>
+
+      <article class="module-card">
+
+        <div class="module-icon">AP</div>
+
+        <h3>Appointments</h3>
+
+        <p>
+          Schedule, update and monitor
+          dental appointments.
+        </p>
+
+        <span class="module-status">
+                    Appointment scheduling
+                </span>
+
+      </article>
+
+      <article class="module-card">
+
+        <div class="module-icon">DR</div>
+
+        <h3>Dentists</h3>
+
+        <p>
+          Organise dentist availability,
+          specialities and workloads.
+        </p>
+
+        <span class="module-status">
+                    Dentist coordination
+                </span>
+
+      </article>
+
+      <article class="module-card">
+
+        <div class="module-icon">TR</div>
+
+        <h3>Treatments</h3>
+
+        <p>
+          Maintain available treatments,
+          durations and clinic prices.
+        </p>
+
+        <span class="module-status">
+                    Treatment catalogue
+                </span>
+
+      </article>
+
+      <article class="module-card">
+
+        <div class="module-icon">BL</div>
+
+        <h3>Billing</h3>
+
+        <p>
+          Record treatment charges and
+          monitor payment information.
+        </p>
+
+        <span class="module-status">
+                    Financial records
+                </span>
+
+      </article>
+
+      <article class="module-card">
+
+        <div class="module-icon">RP</div>
+
+        <h3>Reports</h3>
+
+        <p>
+          Review appointment, workload,
+          treatment and revenue reports.
+        </p>
+
+        <span class="module-status">
+                    Management reporting
+                </span>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <section class="status-card"
+           aria-labelledby="status-title">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow">System health</p>
+
+        <h2 id="status-title">
+          Service status
+        </h2>
+
+      </div>
+
+    </div>
+
+    <div class="status-grid">
+
+      <div class="status-item">
+
+        <span class="status-dot"></span>
+
+        <span>
+
+                    <strong>Database</strong>
+
+                    <small>MySQL connected</small>
+
+                </span>
+
+      </div>
+
+      <div class="status-item">
+
+        <span class="status-dot"></span>
+
+        <span>
+
+                    <strong>Security</strong>
+
+                    <small>Authentication active</small>
+
+                </span>
+
+      </div>
+
+      <div class="status-item">
+
+        <span class="status-dot"></span>
+
+        <span>
+
+                    <strong>Session</strong>
+
+                    <small>Secure user session</small>
+
+                </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="site-footer">
+
+  <p>
+    Sunrise Dental Clinic Management System
+    &copy; 2026
+  </p>
+
+  <p>
+    Student project — st20260655
+  </p>
+
+</footer>
+
+</body>
+</html>
