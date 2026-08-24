@@ -80,4 +80,13 @@ public class PatientController {
         patientService.deletePatient(id);
         return "redirect:/patients";
     }
+    @GetMapping("/{id}/edit")
+    public String showEditForm(
+            @PathVariable Long id,
+            Model model
+    ) {
+        Patient patient = patientService.getPatientById(id);
+        model.addAttribute("patient", patient);
+        return "patients/form";
+    }
 }
