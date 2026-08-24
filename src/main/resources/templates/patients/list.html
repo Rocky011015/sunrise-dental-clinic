@@ -8,38 +8,67 @@
 </head>
 <body>
 
-<main>
-  <h1>Patients</h1>
+<main class="page-shell">
+  <section class="page-header">
+    <div>
+      <p class="eyebrow">Patient Management</p>
+      <h1>Patients</h1>
+      <p class="page-subtitle">
+        Search, view, register, update and manage clinic patient records.
+      </p>
+    </div>
 
-  <a th:href="@{/patients/new}">Register new patient</a>
+    <div class="header-actions">
+    <a class="secondary-action" th:href="@{/dashboard}">Back to dashboard</a>
+    <a class="primary-action" th:href="@{/patients/new}">Register new patient</a>
+  </div>
 
-  <form th:action="@{/patients}" method="get">
-    <input type="text" name="searchTerm" th:value="${searchTerm}" placeholder="Search patients">
-    <button type="submit">Search</button>
-  </form>
+  </section>
 
-  <p th:if="${patients.empty}">No patients found.</p>
+  <section class="toolbar">
+    <form class="search-form" th:action="@{/patients}" method="get">
+      <input
+              type="text"
+              name="searchTerm"
+              th:value="${searchTerm}"
+              placeholder="Search by code, name or contact number">
+      <button type="submit">Search</button>
+    </form>
+  </section>
 
-  <table th:if="${!patients.empty}">
-    <thead>
-    <tr>
-      <th>Patient code</th>
-      <th>Full name</th>
-      <th>Contact number</th>
-      <th>Address</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="patient : ${patients.content}">
-      <td>
-        <a th:href="@{/patients/{id}(id=${patient.id})}" th:text="${patient.patientCode}">P001</a>
-      </td>
-      <td th:text="${patient.fullName}">John Silva</td>
-      <td th:text="${patient.contactNumber}">0771234567</td>
-      <td th:text="${patient.address}">Colombo</td>
-    </tr>
-    </tbody>
-  </table>
+  <section class="content-panel">
+    <div th:if="${patients.empty}" class="empty-state">
+      <h2>No patients found</h2>
+      <p>Start by registering a new patient record.</p>
+      <a class="secondary-action" th:href="@{/patients/new}">
+        Add first patient
+      </a>
+    </div>
+
+    <table th:if="${!patients.empty}" class="data-table">
+      <thead>
+      <tr>
+        <th>Patient code</th>
+        <th>Full name</th>
+        <th>Contact number</th>
+        <th>Address</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="patient : ${patients.content}">
+        <td>
+          <a th:href="@{/patients/{id}(id=${patient.id})}"
+             th:text="${patient.patientCode}">
+            P001
+          </a>
+        </td>
+        <td th:text="${patient.fullName}">John Silva</td>
+        <td th:text="${patient.contactNumber}">0771234567</td>
+        <td th:text="${patient.address}">Colombo</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
 </main>
 
 </body>
