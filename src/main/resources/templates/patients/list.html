@@ -31,7 +31,9 @@
     </thead>
     <tbody>
     <tr th:each="patient : ${patients.content}">
-      <td th:text="${patient.patientCode}">P001</td>
+      <td>
+        <a th:href="@{/patients/{id}(id=${patient.id})}" th:text="${patient.patientCode}">P001</a>
+      </td>
       <td th:text="${patient.fullName}">John Silva</td>
       <td th:text="${patient.contactNumber}">0771234567</td>
       <td th:text="${patient.address}">Colombo</td>
