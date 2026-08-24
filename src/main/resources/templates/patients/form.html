@@ -11,7 +11,9 @@
 <main>
     <h1>Register patient</h1>
 
-    <form th:action="@{/patients}" th:object="${patient}" method="post">
+    <form th:action="${patient.id == null} ? @{/patients} : @{/patients/{id}(id=${patient.id})}"
+           th:object="${patient}"
+           method="post">
         <div>
             <label for="patientCode">Patient code</label>
             <input id="patientCode" type="text" th:field="*{patientCode}">
@@ -36,7 +38,9 @@
             <p th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}"></p>
         </div>
 
-        <button type="submit">Save patient</button>
+        <button type="submit" th:text="${patient.id == null} ? 'Save patient' : 'Update patient'">
+            Save patient
+        </button>
         <a th:href="@{/patients}">Back to patients</a>
     </form>
 </main>
