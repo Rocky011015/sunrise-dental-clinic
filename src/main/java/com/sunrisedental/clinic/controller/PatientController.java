@@ -89,4 +89,17 @@ public class PatientController {
         model.addAttribute("patient", patient);
         return "patients/form";
     }
+    @PostMapping("/{id}")
+    public String updatePatient(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("patient") Patient patient,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "patients/form";
+        }
+
+        patientService.updatePatient(id, patient);
+        return "redirect:/patients/" + id;
+    }
 }
