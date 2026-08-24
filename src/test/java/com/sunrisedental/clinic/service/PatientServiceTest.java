@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -149,5 +150,34 @@ class PatientServiceTest {
 
         assertTrue(exception.getMessage().contains("99"));
         verify(patientRepository, never()).deleteById(anyLong());
+    }
+    @Test
+    void shouldUpdateExistingPatient() {
+        Patient existingPatient = new Patient();
+        existingPatient.setPatientCode("P001");
+        existingPatient.setFullName("Old Name");
+        existingPatient.setAddress("Old Address");
+        existingPatient.setContactNumber("0711111111");
+
+        Patient updatedPatient = new Patient();
+        updatedPatient.setPatientCode("P001");
+        updatedPatient.setFullName("John Silva");
+        updatedPatient.setAddress("Colombo");
+        updatedPatient.setContactNumber("0771234567");
+
+        when(patientRepository.findById(1L))
+                .thenReturn(Optional.of(existingPatient));
+
+        when(patientRepository.save(existingPatient))
+                .thenReturn(existingPatient);
+
+        Patient result = patientService.updatePatient(1L, updatedPatient);
+
+        assertEquals("John Silva", result.getFullName());
+        assertEquals("Colombo", result.getAddress());
+        assertEquals("0771234567", result.getContactNumber());
+
+        verify(patientRepository).findById(1L);
+        verify(patientRepository).save(existingPatient);
     }
 }
