@@ -1,5 +1,9 @@
 package com.sunrisedental.clinic.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import com.sunrisedental.clinic.domain.Patient;
 import com.sunrisedental.clinic.service.PatientService;
 import org.springframework.data.domain.Page;
@@ -47,5 +51,17 @@ public class PatientController {
     public String showCreateForm(Model model) {
         model.addAttribute("patient", new Patient());
         return "patients/form";
+    }
+    @PostMapping
+    public String createPatient(
+            @Valid @ModelAttribute("patient") Patient patient,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "patients/form";
+        }
+
+        patientService.createPatient(patient);
+        return "redirect:/patients";
     }
 }
