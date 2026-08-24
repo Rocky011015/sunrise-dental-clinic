@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
@@ -151,5 +152,24 @@ class PatientControllerTest {
                 .andExpect(redirectedUrl("/patients/1"));
 
         verify(patientService).updatePatient(any(Long.class), any(Patient.class));
+    }
+    @Test
+    void shouldRejectInvalidPatientUpdateForm() throws Exception {
+        mockMvc.perform(post("/patients/1")
+                        .param("patientCode", "")
+                        .param("fullName", "")
+                        .param("address", "")
+                        .param("contactNumber", ""))
+                .andExpect(status().isOk())
+                .andExpect(view().name("patients/form"))
+                .andExpect(model().attributeHasFieldErrors(
+                        "patient",
+                        "patientCode",
+                        "fullName",
+                        "address",
+                        "contactNumber"
+                ));
+
+        verify(patientService, never()).updatePatient(any(Long.class), any(Patient.class));
     }
 }
