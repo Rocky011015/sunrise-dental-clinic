@@ -1,6 +1,7 @@
 package com.sunrisedental.clinic.controller;
 
 import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -73,5 +74,10 @@ public class PatientController {
         Patient patient = patientService.getPatientById(id);
         model.addAttribute("patient", patient);
         return "patients/details";
+    }
+    @PostMapping("/{id}/delete")
+    public String deletePatient(@PathVariable Long id) {
+        patientService.deletePatient(id);
+        return "redirect:/patients";
     }
 }
