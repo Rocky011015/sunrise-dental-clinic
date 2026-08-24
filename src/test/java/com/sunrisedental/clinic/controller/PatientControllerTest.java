@@ -96,4 +96,22 @@ class PatientControllerTest {
 
         verify(patientService).createPatient(any(Patient.class));
     }
+    @Test
+    void shouldDisplayPatientDetails() throws Exception {
+        Patient patient = new Patient();
+        patient.setPatientCode("P001");
+        patient.setFullName("John Silva");
+        patient.setAddress("Colombo");
+        patient.setContactNumber("0771234567");
+
+        when(patientService.getPatientById(1L))
+                .thenReturn(patient);
+
+        mockMvc.perform(get("/patients/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("patients/details"))
+                .andExpect(model().attribute("patient", patient));
+
+        verify(patientService).getPatientById(1L);
+    }
 }
