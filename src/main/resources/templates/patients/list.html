@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patients | Sunrise Dental Clinic</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<main>
+  <h1>Patients</h1>
+
+  <a th:href="@{/patients/new}">Register new patient</a>
+
+  <form th:action="@{/patients}" method="get">
+    <input type="text" name="searchTerm" th:value="${searchTerm}" placeholder="Search patients">
+    <button type="submit">Search</button>
+  </form>
+
+  <p th:if="${patients.empty}">No patients found.</p>
+
+  <table th:if="${!patients.empty}">
+    <thead>
+    <tr>
+      <th>Patient code</th>
+      <th>Full name</th>
+      <th>Contact number</th>
+      <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="patient : ${patients.content}">
+      <td th:text="${patient.patientCode}">P001</td>
+      <td th:text="${patient.fullName}">John Silva</td>
+      <td th:text="${patient.contactNumber}">0771234567</td>
+      <td th:text="${patient.address}">Colombo</td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+
+</body>
+</html>
