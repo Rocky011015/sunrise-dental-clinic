@@ -14,6 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -62,5 +63,22 @@ class PatientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("patients/form"))
                 .andExpect(model().attributeExists("patient"));
+    }
+    @Test
+    void shouldRejectInvalidPatientForm() throws Exception {
+        mockMvc.perform(post("/patients")
+                        .param("patientCode", "")
+                        .param("fullName", "")
+                        .param("address", "")
+                        .param("contactNumber", ""))
+                .andExpect(status().isOk())
+                .andExpect(view().name("patients/form"))
+                .andExpect(model().attributeHasFieldErrors(
+                        "patient",
+                        "patientCode",
+                        "fullName",
+                        "address",
+                        "contactNumber"
+                ));
     }
 }
