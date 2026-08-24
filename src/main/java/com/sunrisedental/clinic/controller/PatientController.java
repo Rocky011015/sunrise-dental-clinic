@@ -1,6 +1,7 @@
 package com.sunrisedental.clinic.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,5 +64,14 @@ public class PatientController {
 
         patientService.createPatient(patient);
         return "redirect:/patients";
+    }
+    @GetMapping("/{id}")
+    public String showPatientDetails(
+            @PathVariable Long id,
+            Model model
+    ) {
+        Patient patient = patientService.getPatientById(id);
+        model.addAttribute("patient", patient);
+        return "patients/details";
     }
 }

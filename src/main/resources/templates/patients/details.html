@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Details | Sunrise Dental Clinic</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<main>
+  <h1>Patient details</h1>
+
+  <dl>
+    <dt>Patient code</dt>
+    <dd th:text="${patient.patientCode}">P001</dd>
+
+    <dt>Full name</dt>
+    <dd th:text="${patient.fullName}">John Silva</dd>
+
+    <dt>Contact number</dt>
+    <dd th:text="${patient.contactNumber}">0771234567</dd>
+
+    <dt>Address</dt>
+    <dd th:text="${patient.address}">Colombo</dd>
+  </dl>
+
+  <a th:href="@{/patients}">Back to patients</a>
+</main>
+
+</body>
+</html>
