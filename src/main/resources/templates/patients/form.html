@@ -3,16 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Register Patient | Sunrise Dental Clinic</title>
-
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
 
 <main>
     <h1>Register patient</h1>
-    <p>The patient registration form is loading correctly.</p>
+
+    <form th:action="@{/patients}" th:object="${patient}" method="post">
+        <div>
+            <label for="patientCode">Patient code</label>
+            <input id="patientCode" type="text" th:field="*{patientCode}">
+            <p th:if="${#fields.hasErrors('patientCode')}" th:errors="*{patientCode}"></p>
+        </div>
+
+        <div>
+            <label for="fullName">Full name</label>
+            <input id="fullName" type="text" th:field="*{fullName}">
+            <p th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></p>
+        </div>
+
+        <div>
+            <label for="address">Address</label>
+            <textarea id="address" th:field="*{address}"></textarea>
+            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+        </div>
+
+        <div>
+            <label for="contactNumber">Contact number</label>
+            <input id="contactNumber" type="text" th:field="*{contactNumber}">
+            <p th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}"></p>
+        </div>
+
+        <button type="submit">Save patient</button>
+        <a th:href="@{/patients}">Back to patients</a>
+    </form>
 </main>
 
 </body>
