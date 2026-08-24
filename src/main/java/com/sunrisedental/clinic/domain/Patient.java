@@ -97,7 +97,7 @@ public class Patient {
     )
     private LocalDateTime updatedAt;
 
-    protected Patient() {
+    public Patient() {
     }
 
     public Patient(

@@ -43,4 +43,9 @@ public class PatientController {
 
         return "patients/list";
     }
+    @GetMapping("/new")
+    public String showCreateForm(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "patients/form";
+    }
 }
