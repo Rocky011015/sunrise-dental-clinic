@@ -86,4 +86,17 @@ public class PatientService {
 
         return patientCode.trim();
     }
+    @Transactional
+    public Patient updatePatient(Long id, Patient updatedPatient) {
+        Patient existingPatient = patientRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(
+                        "No patient found with ID: " + id
+                ));
+
+        existingPatient.setFullName(updatedPatient.getFullName());
+        existingPatient.setAddress(updatedPatient.getAddress());
+        existingPatient.setContactNumber(updatedPatient.getContactNumber());
+
+        return patientRepository.save(existingPatient);
+    }
 }
