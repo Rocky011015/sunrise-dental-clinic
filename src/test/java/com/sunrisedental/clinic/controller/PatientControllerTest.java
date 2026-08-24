@@ -114,4 +114,12 @@ class PatientControllerTest {
 
         verify(patientService).getPatientById(1L);
     }
+    @Test
+    void shouldDeletePatientAndRedirectToList() throws Exception {
+        mockMvc.perform(post("/patients/1/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/patients"));
+
+        verify(patientService).deletePatient(1L);
+    }
 }
