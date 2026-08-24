@@ -1,5 +1,6 @@
 package com.sunrisedental.clinic.controller;
 
+import com.sunrisedental.clinic.domain.Patient;
 import com.sunrisedental.clinic.service.PatientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -80,5 +83,17 @@ class PatientControllerTest {
                         "address",
                         "contactNumber"
                 ));
+    }
+    @Test
+    void shouldCreatePatientAndRedirectToList() throws Exception {
+        mockMvc.perform(post("/patients")
+                        .param("patientCode", "P001")
+                        .param("fullName", "John Silva")
+                        .param("address", "Colombo")
+                        .param("contactNumber", "0771234567"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/patients"));
+
+        verify(patientService).createPatient(any(Patient.class));
     }
 }
