@@ -9,7 +9,9 @@
 <body>
 
 <main>
-    <h1>Register patient</h1>
+    <h1 th:text="${patient.id == null} ? 'Register patient' : 'Edit patient'">
+    Register patient
+</h1>
 
     <form th:action="${patient.id == null} ? @{/patients} : @{/patients/{id}(id=${patient.id})}"
            th:object="${patient}"
