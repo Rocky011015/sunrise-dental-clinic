@@ -56,4 +56,11 @@ class PatientControllerTest {
 
         verify(patientService).searchPatients("", pageable);
     }
+    @Test
+    void shouldDisplayNewPatientForm() throws Exception {
+        mockMvc.perform(get("/patients/new"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("patients/form"))
+                .andExpect(model().attributeExists("patient"));
+    }
 }
