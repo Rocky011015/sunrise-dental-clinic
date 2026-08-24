@@ -140,4 +140,16 @@ class PatientControllerTest {
 
         verify(patientService).getPatientById(1L);
     }
+    @Test
+    void shouldUpdatePatientAndRedirectToDetails() throws Exception {
+        mockMvc.perform(post("/patients/1")
+                        .param("patientCode", "P001")
+                        .param("fullName", "John Silva")
+                        .param("address", "Colombo")
+                        .param("contactNumber", "0771234567"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/patients/1"));
+
+        verify(patientService).updatePatient(any(Long.class), any(Patient.class));
+    }
 }
