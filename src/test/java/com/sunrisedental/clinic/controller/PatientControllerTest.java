@@ -122,4 +122,22 @@ class PatientControllerTest {
 
         verify(patientService).deletePatient(1L);
     }
+    @Test
+    void shouldDisplayEditPatientForm() throws Exception {
+        Patient patient = new Patient();
+        patient.setPatientCode("P001");
+        patient.setFullName("John Silva");
+        patient.setAddress("Colombo");
+        patient.setContactNumber("0771234567");
+
+        when(patientService.getPatientById(1L))
+                .thenReturn(patient);
+
+        mockMvc.perform(get("/patients/1/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("patients/form"))
+                .andExpect(model().attribute("patient", patient));
+
+        verify(patientService).getPatientById(1L);
+    }
 }
