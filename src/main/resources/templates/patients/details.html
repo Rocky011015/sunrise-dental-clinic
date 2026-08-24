@@ -25,6 +25,10 @@
     <dd th:text="${patient.address}">Colombo</dd>
   </dl>
 
+  <form th:action="@{/patients/{id}/delete(id=${patient.id})}" method="post">
+    <button type="submit">Delete patient</button>
+  </form>
+
   <a th:href="@{/patients}">Back to patients</a>
 </main>
 
