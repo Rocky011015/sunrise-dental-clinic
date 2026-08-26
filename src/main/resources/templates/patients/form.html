@@ -3,48 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Patient | Sunrise Dental Clinic</title>
+    <title th:text="${patient.id == null} ? 'Register Patient | Sunrise Dental Clinic' : 'Edit Patient | Sunrise Dental Clinic'">
+        Register Patient | Sunrise Dental Clinic
+    </title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body>
 
-<main>
-    <h1 th:text="${patient.id == null} ? 'Register patient' : 'Edit patient'">
-    Register patient
-</h1>
+<body class="patient-page">
 
-    <form th:action="${patient.id == null} ? @{/patients} : @{/patients/{id}(id=${patient.id})}"
-           th:object="${patient}"
-           method="post">
+<main class="page-shell">
+
+    <section class="page-header">
         <div>
-            <label for="patientCode">Patient code</label>
-            <input id="patientCode" type="text" th:field="*{patientCode}">
-            <p th:if="${#fields.hasErrors('patientCode')}" th:errors="*{patientCode}"></p>
+            <p class="eyebrow">Patient Management</p>
+            <h1 th:text="${patient.id == null} ? 'Register patient' : 'Edit patient'">
+                Register patient
+            </h1>
+            <p class="page-subtitle">
+                Capture accurate patient details for clinic records and follow-up care.
+            </p>
         </div>
 
-        <div>
-            <label for="fullName">Full name</label>
-            <input id="fullName" type="text" th:field="*{fullName}">
-            <p th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></p>
+        <div class="header-actions">
+            <a class="secondary-action" th:href="@{/dashboard}">Back to dashboard</a>
+            <a class="secondary-action" th:href="@{/patients}">Back to patients</a>
         </div>
+    </section>
 
-        <div>
-            <label for="address">Address</label>
-            <textarea id="address" th:field="*{address}"></textarea>
-            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
-        </div>
+    <section class="content-panel form-panel">
+        <form class="patient-form"
+              th:action="${patient.id == null} ? @{/patients} : @{/patients/{id}(id=${patient.id})}"
+              th:object="${patient}"
+              method="post">
 
-        <div>
-            <label for="contactNumber">Contact number</label>
-            <input id="contactNumber" type="text" th:field="*{contactNumber}">
-            <p th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}"></p>
-        </div>
+            <div class="form-grid">
 
-        <button type="submit" th:text="${patient.id == null} ? 'Save patient' : 'Update patient'">
-            Save patient
-        </button>
-        <a th:href="@{/patients}">Back to patients</a>
-    </form>
+                <div class="form-field">
+                    <label for="patientCode">Patient code</label>
+                    <input id="patientCode"
+                           type="text"
+                           th:field="*{patientCode}"
+                           placeholder="Example: P001">
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('patientCode')}"
+                       th:errors="*{patientCode}"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="fullName">Full name</label>
+                    <input id="fullName"
+                           type="text"
+                           th:field="*{fullName}"
+                           placeholder="Enter patient full name">
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('fullName')}"
+                       th:errors="*{fullName}"></p>
+                </div>
+
+                <div class="form-field">
+                    <label for="contactNumber">Contact number</label>
+                    <input id="contactNumber"
+                           type="text"
+                           th:field="*{contactNumber}"
+                           placeholder="Example: 0771234567">
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('contactNumber')}"
+                       th:errors="*{contactNumber}"></p>
+                </div>
+
+                <div class="form-field form-field-wide">
+                    <label for="address">Address</label>
+                    <textarea id="address"
+                              rows="4"
+                              th:field="*{address}"
+                              placeholder="Enter patient residential address"></textarea>
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('address')}"
+                       th:errors="*{address}"></p>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <a class="secondary-action" th:href="@{/patients}">Cancel</a>
+                <button class="primary-action"
+                        type="submit"
+                        th:text="${patient.id == null} ? 'Save patient' : 'Update patient'">
+                    Save patient
+                </button>
+            </div>
+
+        </form>
+    </section>
+
 </main>
 
 </body>
