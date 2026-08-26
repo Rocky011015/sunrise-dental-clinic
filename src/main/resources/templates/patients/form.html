@@ -38,9 +38,10 @@
 
             <div class="form-grid">
 
-                <div class="form-field">
+                <div class="field-group">
                     <label for="patientCode">Patient code</label>
-                    <input id="patientCode"
+                    <input class="form-control"
+                           id="patientCode"
                            type="text"
                            th:field="*{patientCode}"
                            placeholder="Example: P001">
@@ -49,9 +50,10 @@
                        th:errors="*{patientCode}"></p>
                 </div>
 
-                <div class="form-field">
+                <div class="field-group">
                     <label for="fullName">Full name</label>
-                    <input id="fullName"
+                    <input class="form-control"
+                           id="fullName"
                            type="text"
                            th:field="*{fullName}"
                            placeholder="Enter patient full name">
@@ -60,9 +62,10 @@
                        th:errors="*{fullName}"></p>
                 </div>
 
-                <div class="form-field">
+                <div class="field-group">
                     <label for="contactNumber">Contact number</label>
-                    <input id="contactNumber"
+                    <input class="form-control"
+                           id="contactNumber"
                            type="text"
                            th:field="*{contactNumber}"
                            placeholder="Example: 0771234567">
@@ -71,10 +74,10 @@
                        th:errors="*{contactNumber}"></p>
                 </div>
 
-                <div class="form-field form-field-wide">
+                <div class="field-group field-span-2">
                     <label for="address">Address</label>
-                    <textarea id="address"
-                              rows="4"
+                    <textarea class="form-control form-textarea"
+                              id="address"
                               th:field="*{address}"
                               placeholder="Enter patient residential address"></textarea>
                     <p class="field-error"
@@ -86,6 +89,7 @@
 
             <div class="form-actions">
                 <a class="secondary-action" th:href="@{/patients}">Cancel</a>
+
                 <button class="primary-action"
                         type="submit"
                         th:text="${patient.id == null} ? 'Save patient' : 'Update patient'">
