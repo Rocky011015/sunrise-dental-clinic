@@ -7,7 +7,6 @@
   <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body class="patient-page">
-
 <main class="page-shell">
 
   <section class="page-header">
@@ -28,54 +27,53 @@
   </section>
 
   <section class="content-panel detail-panel">
-    <div class="patient-profile">
-      <div class="profile-avatar" aria-hidden="true"
-           th:text="${#strings.substring(patient.fullName, 0, 1)}">
-        P
-      </div>
+    <div class="detail-summary">
+      <div class="patient-initial"
+           th:text="${#strings.substring(patient.fullName, 0, 1)}">J</div>
 
-      <div>
-        <p class="eyebrow">Patient record</p>
+      <div class="patient-meta">
+        <p class="eyebrow">Patient Record</p>
         <h2 th:text="${patient.fullName}">John Silva</h2>
-        <p th:text="${patient.patientCode}">P001</p>
+        <p class="detail-code" th:text="${patient.patientCode}">P001</p>
       </div>
     </div>
 
-    <dl class="detail-grid">
+    <div class="detail-grid">
       <div class="detail-item">
-        <dt>Patient code</dt>
-        <dd th:text="${patient.patientCode}">P001</dd>
+        <span class="detail-label">Patient code</span>
+        <span class="detail-value" th:text="${patient.patientCode}">P001</span>
       </div>
 
       <div class="detail-item">
-        <dt>Full name</dt>
-        <dd th:text="${patient.fullName}">John Silva</dd>
+        <span class="detail-label">Full name</span>
+        <span class="detail-value" th:text="${patient.fullName}">John Silva</span>
       </div>
 
       <div class="detail-item">
-        <dt>Contact number</dt>
-        <dd th:text="${patient.contactNumber}">0771234567</dd>
+        <span class="detail-label">Contact number</span>
+        <span class="detail-value" th:text="${patient.contactNumber}">0771234567</span>
       </div>
 
-      <div class="detail-item detail-item-wide">
-        <dt>Address</dt>
-        <dd th:text="${patient.address}">Colombo</dd>
+      <div class="detail-item">
+        <span class="detail-label">Address</span>
+        <span class="detail-value" th:text="${patient.address}">540 Galle Road Colombo</span>
       </div>
-    </dl>
+    </div>
 
     <div class="detail-actions">
       <a class="secondary-action" th:href="@{/patients}">Back to patients</a>
+
       <a class="primary-action" th:href="@{/patients/{id}/edit(id=${patient.id})}">
         Edit patient
       </a>
 
-      <form th:action="@{/patients/{id}/delete(id=${patient.id})}" method="post">
+      <form th:action="@{/patients/{id}/delete(id=${patient.id})}" method="post"
+            onsubmit="return confirm('Are you sure you want to delete this patient?');">
         <button class="danger-action" type="submit">Delete patient</button>
       </form>
     </div>
   </section>
 
 </main>
-
 </body>
 </html>
