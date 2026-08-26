@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${patient.id == null} ? 'Register Patient | Sunrise Dental Clinic' : 'Edit Patient | Sunrise Dental Clinic'">
+        Register Patient | Sunrise Dental Clinic
+    </title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="patient-page">
+
+<main class="page-shell">
+
+    <section class="page-header">
+        <div>
+            <p class="eyebrow">Patient Management</p>
+            <h1 th:text="${patient.id == null} ? 'Register patient' : 'Edit patient'">
+                Register patient
+            </h1>
+            <p class="page-subtitle">
+                Capture accurate patient details for clinic records and follow-up care.
+            </p>
+        </div>
+
+        <div class="header-actions">
+            <a class="secondary-action" th:href="@{/dashboard}">Back to dashboard</a>
+            <a class="secondary-action" th:href="@{/patients}">Back to patients</a>
+        </div>
+    </section>
+
+    <section class="content-panel form-panel">
+        <form class="patient-form"
+              th:action="${patient.id == null} ? @{/patients} : @{/patients/{id}(id=${patient.id})}"
+              th:object="${patient}"
+              method="post">
+
+            <div class="form-grid">
+
+                <div class="field-group">
+                    <label for="patientCode">Patient code</label>
+                    <input class="form-control"
+                           id="patientCode"
+                           type="text"
+                           th:field="*{patientCode}"
+                           placeholder="Example: P001">
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('patientCode')}"
+                       th:errors="*{patientCode}"></p>
+                </div>
+
+                <div class="field-group">
+                    <label for="fullName">Full name</label>
+                    <input class="form-control"
+                           id="fullName"
+                           type="text"
+                           th:field="*{fullName}"
+                           placeholder="Enter patient full name">
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('fullName')}"
+                       th:errors="*{fullName}"></p>
+                </div>
+
+                <div class="field-group">
+                    <label for="contactNumber">Contact number</label>
+                    <input class="form-control"
+                           id="contactNumber"
+                           type="text"
+                           th:field="*{contactNumber}"
+                           placeholder="Example: 0771234567">
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('contactNumber')}"
+                       th:errors="*{contactNumber}"></p>
+                </div>
+
+                <div class="field-group field-span-2">
+                    <label for="address">Address</label>
+                    <textarea class="form-control form-textarea"
+                              id="address"
+                              th:field="*{address}"
+                              placeholder="Enter patient residential address"></textarea>
+                    <p class="field-error"
+                       th:if="${#fields.hasErrors('address')}"
+                       th:errors="*{address}"></p>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <a class="secondary-action" th:href="@{/patients}">Cancel</a>
+
+                <button class="primary-action"
+                        type="submit"
+                        th:text="${patient.id == null} ? 'Save patient' : 'Update patient'">
+                    Save patient
+                </button>
+            </div>
+
+        </form>
+    </section>
+
+</main>
+
+</body>
+</html>
