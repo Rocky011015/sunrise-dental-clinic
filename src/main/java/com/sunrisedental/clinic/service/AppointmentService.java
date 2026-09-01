@@ -6,6 +6,8 @@ import com.sunrisedental.clinic.domain.AppointmentStatus;
 import com.sunrisedental.clinic.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -194,6 +196,30 @@ public class AppointmentService {
         return appointmentRepository.save(
                 existingAppointment
         );
+    }
+
+    public Page<Appointment> searchAppointments(
+            String searchTerm,
+            Pageable pageable
+    ) {
+
+        String query =
+                searchTerm == null
+                        ? ""
+                        : searchTerm.trim();
+
+        if (query.isBlank()) {
+            return appointmentRepository.findAll(pageable);
+        }
+
+        return appointmentRepository
+                .findByAppointmentNumberContainingIgnoreCaseOrPatient_FullNameContainingIgnoreCaseOrDentist_FullNameContainingIgnoreCaseOrTreatment_TreatmentNameContainingIgnoreCase(
+                        query,
+                        query,
+                        query,
+                        query,
+                        pageable
+                );
     }
 
     @Transactional

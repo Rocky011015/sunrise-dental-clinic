@@ -6,6 +6,7 @@ import com.sunrisedental.clinic.domain.Dentist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.EntityGraph;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,6 +15,24 @@ import java.util.Optional;
 
 public interface AppointmentRepository
         extends JpaRepository<Appointment, Long> {
+
+    @Override
+    @EntityGraph(attributePaths = {
+            "patient",
+            "dentist",
+            "treatment",
+            "createdBy"
+    })
+    Optional<Appointment> findById(Long id);
+
+    @Override
+    @EntityGraph(attributePaths = {
+            "patient",
+            "dentist",
+            "treatment",
+            "createdBy"
+    })
+    Page<Appointment> findAll(Pageable pageable);
 
     Optional<Appointment> findByAppointmentNumberIgnoreCase(
             String appointmentNumber
@@ -38,6 +57,12 @@ public interface AppointmentRepository
             Long id
     );
 
+    @EntityGraph(attributePaths = {
+            "patient",
+            "dentist",
+            "treatment",
+            "createdBy"
+    })
     Page<Appointment>
     findByAppointmentNumberContainingIgnoreCaseOrPatient_FullNameContainingIgnoreCaseOrDentist_FullNameContainingIgnoreCaseOrTreatment_TreatmentNameContainingIgnoreCase(
             String appointmentNumber,
@@ -46,4 +71,5 @@ public interface AppointmentRepository
             String treatmentName,
             Pageable pageable
     );
+
 }
