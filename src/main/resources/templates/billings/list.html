@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Billing | Sunrise Dental Clinic</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/app.css}">
+</head>
+
+<body class="appointment-page billing-page">
+
+<main class="appointment-container">
+
+  <!-- HEADER -->
+  <section class="appointment-hero">
+
+    <div>
+
+      <p class="appointment-eyebrow">
+        BILLING MANAGEMENT
+      </p>
+
+      <h1>Billing</h1>
+
+      <p>
+        Review treatment charges, payments and
+        outstanding patient balances.
+      </p>
+
+    </div>
+
+
+    <div class="appointment-hero-actions">
+
+      <a th:href="@{/dashboard}"
+         class="secondary-button">
+        Back to dashboard
+      </a>
+
+      <a th:href="@{/appointments}"
+         class="primary-button">
+        View appointments
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- MAIN CONTENT -->
+  <section class="appointment-content">
+
+    <div class="appointment-section-header">
+
+      <div>
+
+        <p class="appointment-eyebrow">
+          FINANCIAL RECORDS
+        </p>
+
+        <h2>Billing records</h2>
+
+      </div>
+
+
+      <!-- SEARCH -->
+      <form th:action="@{/billings}"
+            method="get"
+            class="appointment-search">
+
+        <input type="text"
+               name="search"
+               th:value="${searchTerm}"
+               placeholder="Search bill, appointment, patient or treatment">
+
+        <button type="submit"
+                class="primary-button">
+          Search
+        </button>
+
+      </form>
+
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+    <div class="appointment-alert success"
+         th:if="${successMessage != null}"
+         th:text="${successMessage}">
+      Operation completed successfully.
+    </div>
+
+
+    <!-- ERROR MESSAGE -->
+    <div class="appointment-alert error"
+         th:if="${errorMessage != null}"
+         th:text="${errorMessage}">
+      Unable to complete operation.
+    </div>
+
+
+    <!-- BILLING TABLE -->
+    <div class="appointment-table-wrapper"
+         th:if="${billings != null and !billings.empty}">
+
+      <table class="appointment-table">
+
+        <thead>
+
+        <tr>
+          <th>Billing</th>
+          <th>Appointment</th>
+          <th>Patient</th>
+          <th>Treatment</th>
+          <th>Total</th>
+          <th>Paid</th>
+          <th>Balance</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="billing : ${billings}">
+
+          <td>
+
+            <strong class="appointment-number"
+                    th:text="${billing.billingNumber}">
+              BIL-20260902-12345678
+            </strong>
+
+          </td>
+
+
+          <td th:text="${billing.appointment.appointmentNumber}">
+            APT-001
+          </td>
+
+
+          <td>
+
+            <strong th:text="${billing.appointment.patient.fullName}">
+              Patient Name
+            </strong>
+
+          </td>
+
+
+          <td th:text="${billing.appointment.treatment.treatmentName}">
+            Treatment
+          </td>
+
+
+          <td class="billing-money"
+              th:text="${'LKR ' + #numbers.formatDecimal(billing.totalAmount, 1, 2)}">
+            LKR 5000.00
+          </td>
+
+
+          <td class="billing-money"
+              th:text="${'LKR ' + #numbers.formatDecimal(billing.amountPaid, 1, 2)}">
+            LKR 0.00
+          </td>
+
+
+          <td class="billing-money"
+              th:text="${'LKR ' + #numbers.formatDecimal(billing.balance, 1, 2)}">
+            LKR 5000.00
+          </td>
+
+
+          <td>
+
+                        <span class="billing-status unpaid"
+                              th:if="${billing.paymentStatus.name() == 'UNPAID'}">
+                            UNPAID
+                        </span>
+
+            <span class="billing-status partial"
+                  th:if="${billing.paymentStatus.name() == 'PARTIALLY_PAID'}">
+                            PARTIALLY PAID
+                        </span>
+
+            <span class="billing-status paid"
+                  th:if="${billing.paymentStatus.name() == 'PAID'}">
+                            PAID
+                        </span>
+
+          </td>
+
+
+          <td>
+
+            <div class="dentist-actions">
+
+              <a th:href="@{/billings/{id}(id=${billing.id})}"
+                 class="table-action">
+                View
+              </a>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+    <div class="appointment-empty"
+         th:if="${billings == null or billings.empty}">
+
+      <div class="appointment-empty-icon">
+        BL
+      </div>
+
+      <h3>No billing records found</h3>
+
+
+      <p th:if="${searchTerm == null or searchTerm.isBlank()}">
+        There are currently no billing records.
+        Create a bill from an appointment to begin.
+      </p>
+
+
+      <p th:unless="${searchTerm == null or searchTerm.isBlank()}">
+        No billing records matched your search.
+      </p>
+
+
+      <a th:href="@{/appointments}"
+         class="btn btn-primary">
+        View appointments
+      </a>
+
+    </div>
+
+
+    <!-- PAGINATION -->
+    <nav class="appointment-pagination"
+         th:if="${billingPage != null and billingPage.totalPages > 1}">
+
+      <a th:if="${billingPage.hasPrevious()}"
+         th:href="@{/billings(
+                    page=${billingPage.number - 1},
+                    size=${billingPage.size},
+                    search=${searchTerm}
+               )}"
+         class="btn btn-secondary">
+        Previous
+      </a>
+
+
+      <span>
+                Page
+
+                <strong th:text="${billingPage.number + 1}">
+                    1
+                </strong>
+
+                of
+
+                <strong th:text="${billingPage.totalPages}">
+                    1
+                </strong>
+            </span>
+
+
+      <a th:if="${billingPage.hasNext()}"
+         th:href="@{/billings(
+                    page=${billingPage.number + 1},
+                    size=${billingPage.size},
+                    search=${searchTerm}
+               )}"
+         class="btn btn-secondary">
+        Next
+      </a>
+
+    </nav>
+
+  </section>
+
+</main>
+
+</body>
+</html>

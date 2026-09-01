@@ -7,6 +7,8 @@ import com.sunrisedental.clinic.domain.AppointmentStatus;
 import com.sunrisedental.clinic.domain.Dentist;
 import com.sunrisedental.clinic.domain.Patient;
 import com.sunrisedental.clinic.domain.Treatment;
+import com.sunrisedental.clinic.domain.Billing;
+import com.sunrisedental.clinic.service.BillingService;
 import com.sunrisedental.clinic.repository.AppUserRepository;
 import com.sunrisedental.clinic.repository.DentistRepository;
 import com.sunrisedental.clinic.repository.PatientRepository;
@@ -37,6 +39,7 @@ import java.util.NoSuchElementException;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
+    private final BillingService billingService;
     private final PatientRepository patientRepository;
     private final DentistRepository dentistRepository;
     private final TreatmentRepository treatmentRepository;
@@ -44,12 +47,14 @@ public class AppointmentController {
 
     public AppointmentController(
             AppointmentService appointmentService,
+            BillingService billingService,
             PatientRepository patientRepository,
             DentistRepository dentistRepository,
             TreatmentRepository treatmentRepository,
             AppUserRepository appUserRepository
     ) {
         this.appointmentService = appointmentService;
+        this.billingService = billingService;
         this.patientRepository = patientRepository;
         this.dentistRepository = dentistRepository;
         this.treatmentRepository = treatmentRepository;
@@ -267,10 +272,23 @@ public class AppointmentController {
                 appointmentService
                         .getAppointmentById(id);
 
+
+        Billing billing =
+                billingService
+                        .findByAppointmentId(id)
+                        .orElse(null);
+
+
         model.addAttribute(
                 "appointment",
                 appointment
         );
+
+        model.addAttribute(
+                "billing",
+                billing
+        );
+
 
         return "appointments/details";
     }

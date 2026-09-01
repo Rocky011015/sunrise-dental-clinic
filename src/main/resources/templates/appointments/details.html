@@ -53,6 +53,18 @@
 
   <section class="appointment-details-card">
 
+    <div class="appointment-alert success"
+         th:if="${successMessage != null}"
+         th:text="${successMessage}">
+      Operation completed successfully.
+    </div>
+
+    <div class="appointment-alert error"
+         th:if="${errorMessage != null}"
+         th:text="${errorMessage}">
+      Unable to complete operation.
+    </div>
+
     <!-- MAIN RECORD -->
 
     <div class="appointment-record-header">
@@ -297,9 +309,32 @@
         Back to appointments
       </a>
 
+
       <a class="primary-button"
          th:href="@{/appointments/{id}/edit(id=${appointment.id})}">
         Edit appointment
+      </a>
+
+
+      <!-- CREATE BILLING -->
+      <form th:if="${billing == null}"
+            th:action="@{/billings/appointment/{id}(id=${appointment.id})}"
+            method="post">
+
+        <button type="submit"
+                class="primary-button"
+                onclick="return confirm('Create billing for this appointment?');">
+          Create billing
+        </button>
+
+      </form>
+
+
+      <!-- VIEW EXISTING BILLING -->
+      <a th:if="${billing != null}"
+         class="primary-button"
+         th:href="@{/billings/{id}(id=${billing.id})}">
+        View billing
       </a>
 
     </div>
