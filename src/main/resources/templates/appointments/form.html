@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title th:text="${editing}
+            ? 'Edit Appointment | Sunrise Dental Clinic'
+            : 'New Appointment | Sunrise Dental Clinic'">
+    Appointment | Sunrise Dental Clinic
+  </title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/app.css}">
+</head>
+
+<body class="appointment-page">
+
+<main class="appointment-container">
+
+  <section class="appointment-hero">
+
+    <div>
+
+      <p class="eyebrow">
+        APPOINTMENT MANAGEMENT
+      </p>
+
+      <h1 th:text="${editing}
+                    ? 'Edit appointment'
+                    : 'New appointment'">
+        New appointment
+      </h1>
+
+      <p class="appointment-hero-description"
+         th:text="${editing}
+                    ? 'Update the selected appointment while preserving its record history.'
+                    : 'Schedule a new dental appointment using the clinic availability information.'">
+        Schedule a new dental appointment.
+      </p>
+
+    </div>
+
+    <div class="appointment-hero-actions">
+
+      <a class="secondary-button"
+         th:href="@{/appointments}">
+        Back to appointments
+      </a>
+
+      <a class="secondary-button"
+         th:if="${editing and appointment != null}"
+         th:href="@{/appointments/{id}(id=${appointment.id})}">
+        View appointment
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <section class="appointment-form-card">
+
+    <div class="appointment-form-heading">
+
+      <div>
+
+        <p class="eyebrow"
+           th:text="${editing}
+                        ? 'UPDATE RECORD'
+                        : 'SCHEDULE RECORD'">
+          SCHEDULE RECORD
+        </p>
+
+        <h2 th:text="${editing}
+                        ? 'Appointment information'
+                        : 'Schedule appointment'">
+          Schedule appointment
+        </h2>
+
+        <p>
+          Fields marked as required must be completed
+          before the appointment can be saved.
+        </p>
+
+      </div>
+
+      <div class="appointment-form-reference"
+           th:if="${editing and appointment != null}">
+
+                <span>
+                    Appointment
+                </span>
+
+        <strong th:text="${appointment.appointmentNumber}">
+          APT-000001
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <form class="appointment-form"
+          method="post"
+          th:object="${appointmentForm}"
+          th:action="${editing}
+                    ? @{/appointments/{id}(id=${appointment.id})}
+                    : @{/appointments}">
+
+
+      <!-- GLOBAL BUSINESS / VALIDATION ERRORS -->
+
+      <div class="alert alert-error"
+           th:if="${#fields.hasGlobalErrors()}">
+
+        <p th:each="error : ${#fields.globalErrors()}"
+           th:text="${error}"
+          Unable to save appointment.
+        </p>
+
+      </div>
+
+
+      <div class="appointment-form-grid">
+
+
+        <!-- PATIENT -->
+
+        <div class="appointment-field appointment-field-wide">
+
+          <label for="patientId">
+            Patient
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <select id="patientId"
+                  th:field="*{patientId}"
+                  th:classappend="${#fields.hasErrors('patientId')}
+                                    ? ' field-invalid'">
+
+            <option value="">
+              Select a patient
+            </option>
+
+            <option th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.patientCode + ' — ' + patient.fullName}">
+              PAT-0001 — Patient Name
+            </option>
+
+          </select>
+
+          <p class="field-error"
+             th:if="${#fields.hasErrors('patientId')}"
+             th:errors="*{patientId}">
+            Patient is required
+          </p>
+
+        </div>
+
+
+        <!-- DENTIST -->
+
+        <div class="appointment-field">
+
+          <label for="dentistId">
+            Dentist
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <select id="dentistId"
+                  th:field="*{dentistId}"
+                  th:classappend="${#fields.hasErrors('dentistId')}
+                                    ? ' field-invalid'">
+
+            <option value="">
+              Select a dentist
+            </option>
+
+            <option th:each="dentist : ${dentists}"
+                    th:value="${dentist.id}"
+                    th:text="${dentist.fullName + ' — ' + dentist.specialization}">
+              Dentist
+            </option>
+
+          </select>
+
+          <p class="field-hint">
+            Only active dentists are available.
+          </p>
+
+          <p class="field-error"
+             th:if="${#fields.hasErrors('dentistId')}"
+             th:errors="*{dentistId}">
+            Dentist is required
+          </p>
+
+        </div>
+
+
+        <!-- TREATMENT -->
+
+        <div class="appointment-field">
+
+          <label for="treatmentId">
+            Treatment
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <select id="treatmentId"
+                  th:field="*{treatmentId}"
+                  th:classappend="${#fields.hasErrors('treatmentId')}
+                                    ? ' field-invalid'">
+
+            <option value="">
+              Select a treatment
+            </option>
+
+            <option th:each="treatment : ${treatments}"
+                    th:value="${treatment.id}"
+                    th:text="${treatment.treatmentName}">
+              Treatment
+            </option>
+
+          </select>
+
+          <p class="field-hint">
+            Only active treatments are available.
+          </p>
+
+          <p class="field-error"
+             th:if="${#fields.hasErrors('treatmentId')}"
+             th:errors="*{treatmentId}">
+            Treatment is required
+          </p>
+
+        </div>
+
+
+        <!-- DATE -->
+
+        <div class="appointment-field">
+
+          <label for="appointmentDate">
+            Appointment date
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <input id="appointmentDate"
+                 type="date"
+                 th:field="*{appointmentDate}"
+                 th:min="${minimumDate}"
+                 th:classappend="${#fields.hasErrors('appointmentDate')}
+                                    ? ' field-invalid'">
+
+          <p class="field-error"
+             th:if="${#fields.hasErrors('appointmentDate')}"
+             th:errors="*{appointmentDate}">
+            Appointment date is required
+          </p>
+
+        </div>
+
+
+        <!-- TIME -->
+
+        <div class="appointment-field">
+
+          <label for="appointmentTime">
+            Appointment time
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <input id="appointmentTime"
+                 type="time"
+                 th:field="*{appointmentTime}"
+                 th:classappend="${#fields.hasErrors('appointmentTime')}
+                                    ? ' field-invalid'">
+
+          <p class="field-error"
+             th:if="${#fields.hasErrors('appointmentTime')}"
+             th:errors="*{appointmentTime}">
+            Appointment time is required
+          </p>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="appointment-field">
+
+          <label for="status">
+            Status
+            <span aria-hidden="true">*</span>
+          </label>
+
+          <select id="status"
+                  th:field="*{status}"
+                  th:classappend="${#fields.hasErrors('status')}
+                                    ? ' field-invalid'">
+
+            <option th:each="appointmentStatus : ${statuses}"
+                    th:value="${appointmentStatus}"
+                    th:text="${#strings.capitalize(
+                                        #strings.toLowerCase(
+                                                appointmentStatus.name()
+                                        )
+                                )}">
+              Scheduled
+            </option>
+
+          </select>
+
+          <p class="field-error"
+             th:if="${#fields.hasErrors('status')}"
+             th:errors="*{status}">
+            Status is required
+          </p>
+
+        </div>
+
+
+        <!-- NOTES -->
+
+        <div class="appointment-field appointment-field-wide">
+
+          <label for="notes">
+            Notes
+          </label>
+
+          <textarea id="notes"
+                    rows="5"
+                    maxlength="500"
+                    th:field="*{notes}"
+                    th:classappend="${#fields.hasErrors('notes')}
+                                    ? ' field-invalid'"
+                    placeholder="Optional notes about the appointment, preparation or patient requirements."></textarea>
+
+          <div class="field-meta">
+
+                        <span>
+                            Optional
+                        </span>
+
+            <span>
+                            Maximum 500 characters
+                        </span>
+
+          </div>
+
+          <p class="field-error"
+             th:if="${#fields.hasErrors('notes')}"
+             th:errors="*{notes}">
+            Notes are invalid
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="appointment-form-info">
+
+        <div class="appointment-info-icon">
+          SD
+        </div>
+
+        <div>
+
+          <strong>
+            Secure appointment creation
+          </strong>
+
+          <p>
+            The appointment number will be generated
+            automatically. The authenticated clinic user
+            will also be recorded automatically as the
+            creator of this appointment.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="appointment-form-actions">
+
+        <a class="secondary-button"
+           th:if="${!editing}"
+           th:href="@{/appointments}">
+          Cancel
+        </a>
+
+        <a class="secondary-button"
+           th:if="${editing and appointment != null}"
+           th:href="@{/appointments/{id}(id=${appointment.id})}">
+          Cancel
+        </a>
+
+        <button class="primary-button"
+                type="submit"
+                th:text="${editing}
+                                ? 'Save changes'
+                                : 'Create appointment'">
+          Create appointment
+        </button>
+
+      </div>
+
+    </form>
+
+  </section>
+
+</main>
+
+</body>
+</html>

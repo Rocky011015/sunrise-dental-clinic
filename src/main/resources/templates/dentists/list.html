@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dentists | Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+</head>
+
+<body class="appointment-page dentist-page">
+
+<main class="appointment-container">
+
+    <!-- Header -->
+    <section class="appointment-hero">
+
+        <div>
+            <p class="appointment-eyebrow">
+                DENTIST MANAGEMENT
+            </p>
+
+            <h1>Dentists</h1>
+
+            <p>
+                Manage clinic dentists, specializations
+                and availability.
+            </p>
+        </div>
+
+        <div class="appointment-hero-actions">
+
+            <a th:href="@{/dashboard}"
+               class="btn btn-secondary">
+                Back to dashboard
+            </a>
+
+            <a th:href="@{/dentists/new}"
+               class="btn btn-primary">
+                Add dentist
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- Main card -->
+    <section class="appointment-content">
+
+        <div class="appointment-section-header">
+
+            <div>
+                <p class="appointment-eyebrow">
+                    CLINIC TEAM
+                </p>
+
+                <h2>Dentist records</h2>
+            </div>
+
+
+            <!-- Search -->
+            <form th:action="@{/dentists}"
+                  method="get"
+                  class="appointment-search">
+
+                <input type="text"
+                       name="search"
+                       th:value="${search}"
+                       placeholder="Search code, dentist or specialization">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Success message -->
+        <div class="appointment-alert success"
+             th:if="${successMessage != null}"
+             th:text="${successMessage}">
+            Operation completed successfully.
+        </div>
+
+
+        <!-- Dentist table -->
+        <div class="appointment-table-wrapper"
+             th:if="${dentists != null and !dentists.empty}">
+
+            <table class="appointment-table">
+
+                <thead>
+                <tr>
+                    <th>Dentist</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Consultation fee</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="dentist : ${dentists.content}">
+
+                    <td>
+                        <strong class="appointment-number"
+                                th:text="${dentist.dentistCode}">
+                            DEN-001
+                        </strong>
+                    </td>
+
+                    <td>
+                        <strong th:text="${dentist.fullName}">
+                            Dr. Nimal Perera
+                        </strong>
+                    </td>
+
+                    <td th:text="${dentist.specialization}">
+                        General Dentistry
+                    </td>
+
+                    <td th:text="${'LKR ' + #numbers.formatDecimal(dentist.consultationFee, 1, 2)}">
+                        LKR 5000.00
+                    </td>
+
+                    <td>
+
+                        <span class="dentist-status active"
+                              th:if="${dentist.active}">
+                            ACTIVE
+                        </span>
+
+                        <span class="dentist-status inactive"
+                              th:unless="${dentist.active}">
+                            INACTIVE
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="dentist-actions">
+
+                            <a th:href="@{/dentists/{id}/edit(id=${dentist.id})}"
+                               class="table-action">
+                                Edit
+                            </a>
+
+
+                            <form th:if="${dentist.active}"
+                                  th:action="@{/dentists/{id}/deactivate(id=${dentist.id})}"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="table-action danger"
+                                        onclick="return confirm('Deactivate this dentist?');">
+                                    Deactivate
+                                </button>
+
+                            </form>
+
+
+                            <form th:unless="${dentist.active}"
+                                  th:action="@{/dentists/{id}/activate(id=${dentist.id})}"
+                                  method="post">
+
+                                <button type="submit"
+                                        class="table-action activate">
+                                    Activate
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Empty state -->
+        <div class="appointment-empty"
+             th:if="${dentists == null or dentists.empty}">
+
+            <div class="appointment-empty-icon">
+                DR
+            </div>
+
+            <h3>No dentists found</h3>
+
+            <p th:if="${search == null or search.isBlank()}">
+                There are currently no dentist records.
+                Add the first dentist to begin.
+            </p>
+
+            <p th:unless="${search == null or search.isBlank()}">
+                No dentists matched your search.
+            </p>
+
+            <a th:href="@{/dentists/new}"
+               class="btn btn-primary">
+                Add dentist
+            </a>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <nav class="appointment-pagination"
+             th:if="${dentists != null and dentists.totalPages > 1}">
+
+            <a th:if="${dentists.hasPrevious()}"
+               th:href="@{/dentists(
+                    page=${dentists.number - 1},
+                    search=${search}
+               )}"
+               class="btn btn-secondary">
+                Previous
+            </a>
+
+            <span>
+                Page
+                <strong th:text="${dentists.number + 1}">
+                    1
+                </strong>
+                of
+                <strong th:text="${dentists.totalPages}">
+                    1
+                </strong>
+            </span>
+
+            <a th:if="${dentists.hasNext()}"
+               th:href="@{/dentists(
+                    page=${dentists.number + 1},
+                    search=${search}
+               )}"
+               class="btn btn-secondary">
+                Next
+            </a>
+
+        </nav>
+
+    </section>
+
+</main>
+
+</body>
+</html>

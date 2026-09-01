@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Appointments | Sunrise Dental Clinic</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/app.css}">
+</head>
+
+<body class="appointment-page">
+
+<main class="appointment-container">
+
+  <section class="appointment-hero">
+
+    <div>
+      <p class="eyebrow">
+        APPOINTMENT MANAGEMENT
+      </p>
+
+      <h1>Appointments</h1>
+
+      <p class="appointment-hero-description">
+        Schedule, review and manage dental appointments
+        securely.
+      </p>
+    </div>
+
+    <div class="appointment-hero-actions">
+
+      <a class="secondary-button"
+         th:href="@{/dashboard}">
+        Back to dashboard
+      </a>
+
+      <a class="primary-button"
+         th:href="@{/appointments/new}">
+        New appointment
+      </a>
+
+    </div>
+
+  </section>
+
+  <section class="appointment-content">
+
+    <div class="appointment-toolbar">
+
+      <div>
+        <p class="eyebrow">
+          CLINIC SCHEDULE
+        </p>
+
+        <h2>
+          Appointment records
+        </h2>
+      </div>
+
+      <form class="appointment-search"
+            method="get"
+            th:action="@{/appointments}">
+
+        <label class="sr-only"
+               for="appointment-search">
+          Search appointments
+        </label>
+
+        <input id="appointment-search"
+               name="search"
+               type="search"
+               th:value="${searchTerm}"
+               placeholder="Search number, patient, dentist or treatment">
+
+        <button class="primary-button"
+                type="submit">
+          Search
+        </button>
+
+        <a class="secondary-button"
+           th:if="${searchTerm != null and !searchTerm.isBlank()}"
+           th:href="@{/appointments}">
+          Clear
+        </a>
+
+      </form>
+
+    </div>
+
+    <div class="alert alert-success"
+         th:if="${successMessage != null}"
+         th:text="${successMessage}">
+    </div>
+
+    <div class="appointment-table-wrapper"
+         th:if="${appointments != null and !appointments.isEmpty()}">
+
+      <table class="appointment-table">
+
+        <thead>
+
+        <tr>
+          <th>Appointment</th>
+          <th>Patient</th>
+          <th>Dentist</th>
+          <th>Treatment</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th class="table-action-heading">
+            Action
+          </th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="appointment : ${appointments}">
+
+          <td>
+
+            <a class="appointment-number-link"
+               th:href="@{/appointments/{id}(id=${appointment.id})}"
+               th:text="${appointment.appointmentNumber}">
+              APT-000001
+            </a>
+
+          </td>
+
+          <td th:text="${appointment.patient.fullName}">
+            Patient Name
+          </td>
+
+          <td>
+
+            <div class="table-primary-text"
+                 th:text="${appointment.dentist.fullName}">
+              Dentist Name
+            </div>
+
+            <div class="table-secondary-text"
+                 th:text="${appointment.dentist.specialization}">
+              Specialization
+            </div>
+
+          </td>
+
+          <td th:text="${appointment.treatment.treatmentName}">
+            Treatment
+          </td>
+
+          <td th:text="${appointment.appointmentDate}">
+            2026-08-28
+          </td>
+
+          <td th:text="${appointment.appointmentTime}">
+            10:30
+          </td>
+
+          <td>
+
+                        <span class="appointment-status"
+                              th:classappend="' status-' + ${#strings.toLowerCase(appointment.status.name())}"
+                              th:text="${appointment.status}">
+                            SCHEDULED
+                        </span>
+
+          </td>
+
+          <td class="table-actions">
+
+            <a class="table-action-link"
+               th:href="@{/appointments/{id}(id=${appointment.id})}">
+              View
+            </a>
+
+            <a class="table-action-link"
+               th:if="${appointment.status.name() != 'CANCELLED'
+                                  and appointment.status.name() != 'COMPLETED'}"
+               th:href="@{/appointments/{id}/edit(id=${appointment.id})}">
+              Edit
+            </a>
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="appointment-empty-state"
+         th:if="${appointments == null or appointments.isEmpty()}">
+
+      <div class="empty-state-icon">
+        AP
+      </div>
+
+      <h3>
+        No appointments found
+      </h3>
+
+      <p th:if="${searchTerm == null or searchTerm.isBlank()}">
+        There are currently no appointment records.
+        Create the first appointment to begin scheduling.
+      </p>
+
+      <p th:if="${searchTerm != null and !searchTerm.isBlank()}">
+        No appointments matched your search.
+        Try another patient, dentist, treatment or
+        appointment number.
+      </p>
+
+      <a class="primary-button"
+         th:if="${searchTerm == null or searchTerm.isBlank()}"
+         th:href="@{/appointments/new}">
+        Create appointment
+      </a>
+
+      <a class="secondary-button"
+         th:if="${searchTerm != null and !searchTerm.isBlank()}"
+         th:href="@{/appointments}">
+        Show all appointments
+      </a>
+
+    </div>
+
+    <nav class="appointment-pagination"
+         th:if="${appointmentPage != null
+                     and appointmentPage.totalPages > 1}"
+         aria-label="Appointment pages">
+
+      <a class="secondary-button"
+         th:classappend="${appointmentPage.first} ? ' disabled-link'"
+         th:if="${!appointmentPage.first}"
+         th:href="@{/appointments(
+                        page=${appointmentPage.number - 1},
+                        size=${appointmentPage.size},
+                        search=${searchTerm}
+               )}">
+        Previous
+      </a>
+
+      <span class="pagination-summary">
+
+                Page
+
+                <strong th:text="${appointmentPage.number + 1}">
+                    1
+                </strong>
+
+                of
+
+                <strong th:text="${appointmentPage.totalPages}">
+                    1
+                </strong>
+
+            </span>
+
+      <a class="secondary-button"
+         th:if="${!appointmentPage.last}"
+         th:href="@{/appointments(
+                        page=${appointmentPage.number + 1},
+                        size=${appointmentPage.size},
+                        search=${searchTerm}
+               )}">
+        Next
+      </a>
+
+    </nav>
+
+  </section>
+
+</main>
+
+</body>
+</html>
