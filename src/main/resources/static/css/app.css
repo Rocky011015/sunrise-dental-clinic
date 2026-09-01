@@ -2639,3 +2639,21 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* TREATMENT MANAGEMENT - TABLE POLISH */
+
+.treatment-page .appointment-table th:nth-child(4),
+.treatment-page .appointment-table td:nth-child(4),
+.treatment-page .appointment-table th:nth-child(5),
+.treatment-page .appointment-table td:nth-child(5),
+.treatment-page .appointment-table th:nth-child(6),
+.treatment-page .appointment-table td:nth-child(6),
+.treatment-page .appointment-table th:nth-child(7),
+.treatment-page .appointment-table td:nth-child(7) {
+    white-space: nowrap;
+}
+
+.treatment-page .appointment-table th:nth-child(5),
+.treatment-page .appointment-table td:nth-child(5) {
+    min-width: 95px;
+}

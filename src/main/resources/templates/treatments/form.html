@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${editMode}
+            ? 'Edit Treatment | Sunrise Dental Clinic'
+            : 'Add Treatment | Sunrise Dental Clinic'">
+
+        Treatment | Sunrise Dental Clinic
+
+    </title>
+
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body class="appointment-page dentist-page treatment-page">
+
+<main class="appointment-container">
+
+
+    <!-- HERO -->
+    <section class="appointment-hero">
+
+        <div>
+
+            <p class="appointment-eyebrow">
+                TREATMENT MANAGEMENT
+            </p>
+
+
+            <h1 th:text="${editMode}
+                    ? 'Edit treatment'
+                    : 'Add treatment'">
+
+                Add treatment
+
+            </h1>
+
+
+            <p th:text="${editMode}
+                    ? 'Update treatment information, duration and clinic pricing.'
+                    : 'Register a new dental treatment with Sunrise Dental Clinic.'">
+
+                Register a new dental treatment.
+
+            </p>
+
+        </div>
+
+
+        <div class="appointment-hero-actions">
+
+            <a th:href="@{/treatments}"
+               class="dentist-btn dentist-btn-secondary">
+
+                Back to treatments
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FORM CARD -->
+    <section class="appointment-content">
+
+
+        <div class="appointment-section-header">
+
+            <div>
+
+                <p class="appointment-eyebrow"
+                   th:text="${editMode}
+                        ? 'UPDATE RECORD'
+                        : 'NEW RECORD'">
+
+                    NEW RECORD
+
+                </p>
+
+
+                <h2 th:text="${editMode}
+                        ? 'Treatment information'
+                        : 'Register treatment'">
+
+                    Register treatment
+
+                </h2>
+
+
+                <p class="dentist-form-help">
+
+                    Fields marked as required must be completed
+                    before the treatment can be saved.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FORM -->
+        <form th:object="${treatment}"
+              th:action="${editMode}
+                    ? @{/treatments/{id}(id=${treatment.id})}
+                    : @{/treatments}"
+              method="post"
+              class="dentist-form">
+
+
+            <!-- CSRF -->
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+
+
+
+            <!-- Global validation/business errors -->
+            <div class="dentist-alert error"
+                 th:if="${#fields.hasGlobalErrors()}">
+
+                <p th:each="error : ${#fields.globalErrors()}"
+                   th:text="${error}">
+
+                    Unable to save treatment.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="dentist-form-grid">
+
+
+                <!-- Treatment code -->
+                <div class="dentist-field">
+
+                    <label for="treatmentCode">
+
+                        Treatment code
+                        <span>*</span>
+
+                    </label>
+
+
+                    <input id="treatmentCode"
+                           type="text"
+                           th:field="*{treatmentCode}"
+                           maxlength="20"
+                           placeholder="Example: TRT-006">
+
+
+                    <p class="dentist-error"
+                       th:if="${#fields.hasErrors('treatmentCode')}"
+                       th:errors="*{treatmentCode}">
+
+                        Treatment code error
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- Treatment name -->
+                <div class="dentist-field">
+
+                    <label for="treatmentName">
+
+                        Treatment name
+                        <span>*</span>
+
+                    </label>
+
+
+                    <input id="treatmentName"
+                           type="text"
+                           th:field="*{treatmentName}"
+                           maxlength="120"
+                           placeholder="Example: Root Canal Treatment">
+
+
+                    <p class="dentist-error"
+                       th:if="${#fields.hasErrors('treatmentName')}"
+                       th:errors="*{treatmentName}">
+
+                        Treatment name error
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- Base price -->
+                <div class="dentist-field">
+
+                    <label for="basePrice">
+
+                        Base price (LKR)
+                        <span>*</span>
+
+                    </label>
+
+
+                    <input id="basePrice"
+                           type="number"
+                           th:field="*{basePrice}"
+                           min="0"
+                           step="0.01"
+                           placeholder="5000.00">
+
+
+                    <p class="dentist-error"
+                       th:if="${#fields.hasErrors('basePrice')}"
+                       th:errors="*{basePrice}">
+
+                        Base price error
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- Duration -->
+                <div class="dentist-field">
+
+                    <label for="estimatedDurationMinutes">
+
+                        Estimated duration (minutes)
+                        <span>*</span>
+
+                    </label>
+
+
+                    <input id="estimatedDurationMinutes"
+                           type="number"
+                           th:field="*{estimatedDurationMinutes}"
+                           min="1"
+                           step="1"
+                           placeholder="Example: 30">
+
+
+                    <p class="dentist-error"
+                       th:if="${#fields.hasErrors('estimatedDurationMinutes')}"
+                       th:errors="*{estimatedDurationMinutes}">
+
+                        Duration error
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Description -->
+            <div class="dentist-field"
+                 style="margin-top: 18px;">
+
+                <label for="description">
+
+                    Description
+
+                </label>
+
+
+                <textarea id="description"
+                          th:field="*{description}"
+                          rows="5"
+                          maxlength="500"
+                          placeholder="Enter a short description of the treatment"></textarea>
+
+
+                <p class="dentist-error"
+                   th:if="${#fields.hasErrors('description')}"
+                   th:errors="*{description}">
+
+                    Description error
+
+                </p>
+
+            </div>
+
+
+
+            <!-- Active status -->
+            <div class="dentist-status-control">
+
+                <div>
+
+                    <strong>
+                        Treatment availability
+                    </strong>
+
+
+                    <p>
+                        Active treatments are available when
+                        scheduling clinic appointments.
+                    </p>
+
+                </div>
+
+
+                <input type="checkbox"
+                       th:field="*{active}"
+                       class="dentist-toggle"
+                       aria-label="Treatment availability">
+
+            </div>
+
+
+
+            <!-- Actions -->
+            <div class="dentist-form-actions">
+
+                <a th:href="@{/treatments}"
+                   class="dentist-btn dentist-btn-secondary">
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="dentist-btn dentist-btn-primary"
+                        th:text="${editMode}
+                                ? 'Save changes'
+                                : 'Add treatment'">
+
+                    Add treatment
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>
