@@ -537,6 +537,14 @@ a:focus-visible {
         box-shadow 180ms ease;
 }
 
+/* Dashboard cards can be <a> elements so the entire card is clickable. */
+a.module-card,
+a.module-card:visited {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .module-card:hover {
     transform: translateY(-4px);
     border-color: #b8d6df;
@@ -569,7 +577,8 @@ a:focus-visible {
     line-height: 1.6;
 }
 
-.module-status {
+.module-status,
+.module-link {
     margin-top: auto;
     color: var(--blue);
     font-size: 0.78rem;
@@ -2323,5 +2332,310 @@ body {
     .appointment-details-actions form,
     .appointment-details-actions button {
         width: 100%;
+    }
+}
+
+/* Dentist Management */
+
+.dentist-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.dentist-status.active {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dentist-status.inactive {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.dentist-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.dentist-actions form {
+    margin: 0;
+}
+
+.table-action {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: #078b83;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.table-action:hover {
+    text-decoration: underline;
+}
+
+.table-action.danger {
+    color: #dc2626;
+}
+
+.table-action.activate {
+    color: #15803d;
+}
+
+/* Dentist Forms  */
+
+.dentist-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 18px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.dentist-btn-primary {
+    background: #12aaa1;
+    color: #ffffff;
+}
+
+.dentist-btn-primary:hover {
+    background: #0b9189;
+}
+
+.dentist-btn-secondary {
+    background: #ffffff;
+    color: #123b59;
+    border-color: #d6e3ec;
+}
+
+.dentist-btn-secondary:hover {
+    background: #f4f8fb;
+}
+
+.dentist-form-help {
+    margin-top: 5px;
+    color: #718096;
+    font-size: 13px;
+}
+
+.dentist-form {
+    margin-top: 22px;
+}
+
+.dentist-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.dentist-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.dentist-field label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #102f47;
+}
+
+.dentist-field label span {
+    color: #dc2626;
+}
+
+.dentist-field input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 13px;
+    border: 1px solid #c9dbe7;
+    border-radius: 10px;
+    background: #f8fbfd;
+    color: #102f47;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.dentist-field input:focus {
+    border-color: #12aaa1;
+    box-shadow: 0 0 0 3px rgba(18, 170, 161, 0.10);
+}
+
+.dentist-error {
+    margin: 0;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.dentist-alert.error {
+    margin-bottom: 20px;
+    padding: 14px 16px;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+.dentist-alert.error p {
+    margin: 0;
+}
+
+.dentist-status-control {
+    margin-top: 22px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #cfe7e5;
+    border-radius: 12px;
+    background: #f1fbfa;
+}
+
+.dentist-status-control strong {
+    color: #0f4f4b;
+}
+
+.dentist-status-control p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Dentist availability toggle */
+
+.dentist-toggle {
+    appearance: none;
+    -webkit-appearance: none;
+
+    position: relative;
+    width: 48px;
+    height: 26px;
+    min-width: 48px;
+
+    margin: 0;
+
+    border: none;
+    border-radius: 999px;
+
+    background: #cbd5e1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    flex-shrink: 0;
+}
+
+.dentist-toggle::before {
+    content: "";
+
+    position: absolute;
+
+    width: 20px;
+    height: 20px;
+
+    top: 3px;
+    left: 3px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.18);
+
+    transition: transform 0.2s ease;
+}
+
+.dentist-toggle:checked {
+    background: #12aaa1;
+}
+
+.dentist-toggle:checked::before {
+    transform: translateX(22px);
+}
+
+.dentist-toggle:hover {
+    box-shadow:
+        0 0 0 3px rgba(18, 170, 161, 0.10);
+}
+
+.dentist-toggle:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(18, 170, 161, 0.20);
+}
+
+.dentist-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Fix buttons on dentist list page */
+
+.dentist-page .appointment-hero-actions .btn,
+.dentist-page .appointment-empty .btn,
+.dentist-page .appointment-pagination .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 18px;
+    border-radius: 10px;
+    border: 1px solid #d6e3ec;
+    background: #ffffff;
+    color: #123b59;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.dentist-page .appointment-hero-actions .btn-primary,
+.dentist-page .appointment-empty .btn-primary {
+    border-color: #12aaa1;
+    background: #12aaa1;
+    color: #ffffff;
+}
+
+.dentist-page .appointment-search button {
+    min-height: 38px;
+    padding: 0 17px;
+    border: 0;
+    border-radius: 9px;
+    background: #12aaa1;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .dentist-form-grid {
+        grid-template-columns: 1fr;
     }
 }
