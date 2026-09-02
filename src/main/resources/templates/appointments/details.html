@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Appointment Details | Sunrise Dental Clinic</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/app.css}">
+</head>
+
+<body class="appointment-page">
+
+<main class="appointment-container">
+
+  <section class="appointment-hero">
+
+    <div>
+      <p class="eyebrow">
+        APPOINTMENT MANAGEMENT
+      </p>
+
+      <h1>
+        Appointment details
+      </h1>
+
+      <p class="appointment-hero-description">
+        Review the complete dental appointment record.
+      </p>
+    </div>
+
+    <div class="appointment-hero-actions">
+
+      <a class="secondary-button"
+         th:href="@{/appointments}">
+        Back to appointments
+      </a>
+
+      <a class="primary-button"
+         th:href="@{/appointments/{id}/edit(id=${appointment.id})}">
+        Edit appointment
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <section class="appointment-details-card">
+
+    <div class="appointment-alert success"
+         th:if="${successMessage != null}"
+         th:text="${successMessage}">
+      Operation completed successfully.
+    </div>
+
+    <div class="appointment-alert error"
+         th:if="${errorMessage != null}"
+         th:text="${errorMessage}">
+      Unable to complete operation.
+    </div>
+
+    <!-- MAIN RECORD -->
+
+    <div class="appointment-record-header">
+
+      <div class="appointment-record-icon">
+        AP
+      </div>
+
+      <div class="appointment-record-title">
+
+        <p class="eyebrow">
+          APPOINTMENT RECORD
+        </p>
+
+        <h2 th:text="${appointment.appointmentNumber}">
+          Appointment
+        </h2>
+
+        <p th:text="${appointment.status}">
+          SCHEDULED
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- DATE / TIME -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+        <div>
+          <p class="eyebrow">SCHEDULE</p>
+          <h3>Date and time</h3>
+        </div>
+      </div>
+
+      <div class="appointment-details-grid">
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Appointment date
+                    </span>
+
+          <strong th:text="${appointment.appointmentDate}">
+            Date
+          </strong>
+        </div>
+
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Appointment time
+                    </span>
+
+          <strong th:text="${appointment.appointmentTime}">
+            Time
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PATIENT -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+        <div>
+          <p class="eyebrow">PATIENT</p>
+          <h3>Patient information</h3>
+        </div>
+      </div>
+
+      <div class="appointment-details-grid">
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Patient code
+                    </span>
+
+          <strong th:text="${appointment.patient.patientCode}">
+            Patient Code
+          </strong>
+        </div>
+
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Full name
+                    </span>
+
+          <strong th:text="${appointment.patient.fullName}">
+            Patient Name
+          </strong>
+        </div>
+
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Contact number
+                    </span>
+
+          <strong th:text="${appointment.patient.contactNumber}">
+            Contact
+          </strong>
+        </div>
+
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Address
+                    </span>
+
+          <strong th:text="${appointment.patient.address}">
+            Address
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- DENTIST -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+        <div>
+          <p class="eyebrow">DENTIST</p>
+          <h3>Assigned dentist</h3>
+        </div>
+      </div>
+
+      <div class="appointment-details-grid">
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Dentist
+                    </span>
+
+          <strong th:text="${appointment.dentist.fullName}">
+            Dentist Name
+          </strong>
+        </div>
+
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Specialization
+                    </span>
+
+          <strong th:text="${appointment.dentist.specialization}">
+            Specialization
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TREATMENT -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+        <div>
+          <p class="eyebrow">TREATMENT</p>
+          <h3>Treatment information</h3>
+        </div>
+      </div>
+
+      <div class="appointment-details-grid">
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Treatment
+                    </span>
+
+          <strong th:text="${appointment.treatment.treatmentName}">
+            Treatment Name
+          </strong>
+        </div>
+
+
+        <div class="appointment-detail-box">
+                    <span class="detail-label">
+                        Base price
+                    </span>
+
+          <strong>
+            LKR
+            <span th:text="${appointment.treatment.basePrice}">
+                            0.00
+                        </span>
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- NOTES -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+        <div>
+          <p class="eyebrow">NOTES</p>
+          <h3>Appointment notes</h3>
+        </div>
+      </div>
+
+      <div class="appointment-notes-box">
+
+                <span th:if="${appointment.notes != null}"
+                      th:text="${appointment.notes}">
+                    Notes
+                </span>
+
+        <span th:if="${appointment.notes == null}">
+                    No additional notes were recorded.
+                </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="appointment-details-actions">
+
+      <a class="secondary-button"
+         th:href="@{/appointments}">
+        Back to appointments
+      </a>
+
+
+      <a class="primary-button"
+         th:href="@{/appointments/{id}/edit(id=${appointment.id})}">
+        Edit appointment
+      </a>
+
+
+      <!-- CREATE BILLING -->
+      <form th:if="${billing == null}"
+            th:action="@{/billings/appointment/{id}(id=${appointment.id})}"
+            method="post">
+
+        <button type="submit"
+                class="primary-button"
+                onclick="return confirm('Create billing for this appointment?');">
+          Create billing
+        </button>
+
+      </form>
+
+
+      <!-- VIEW EXISTING BILLING -->
+      <a th:if="${billing != null}"
+         class="primary-button"
+         th:href="@{/billings/{id}(id=${billing.id})}">
+        View billing
+      </a>
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>

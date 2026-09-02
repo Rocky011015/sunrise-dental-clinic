@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Treatments | Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+</head>
+
+<body class="appointment-page dentist-page treatment-page">
+
+<main class="appointment-container">
+
+    <!-- Header -->
+    <section class="appointment-hero">
+
+        <div>
+
+            <p class="appointment-eyebrow">
+                TREATMENT MANAGEMENT
+            </p>
+
+            <h1>Treatments</h1>
+
+            <p>
+                Manage dental treatments, durations,
+                descriptions and clinic prices.
+            </p>
+
+        </div>
+
+        <div class="appointment-hero-actions">
+
+            <a th:href="@{/dashboard}"
+               class="btn btn-secondary">
+                Back to dashboard
+            </a>
+
+            <a th:href="@{/treatments/new}"
+               class="btn btn-primary">
+                Add treatment
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- Main card -->
+    <section class="appointment-content">
+
+        <div class="appointment-section-header">
+
+            <div>
+
+                <p class="appointment-eyebrow">
+                    CLINIC SERVICES
+                </p>
+
+                <h2>Treatment records</h2>
+
+            </div>
+
+
+            <!-- Search -->
+            <form th:action="@{/treatments}"
+                  method="get"
+                  class="appointment-search">
+
+                <input type="text"
+                       name="search"
+                       th:value="${search}"
+                       placeholder="Search code, treatment or description">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Success message -->
+        <div class="appointment-alert success"
+             th:if="${successMessage != null}"
+             th:text="${successMessage}">
+            Operation completed successfully.
+        </div>
+
+
+        <!-- Error message -->
+        <div class="appointment-alert error"
+             th:if="${errorMessage != null}"
+             th:text="${errorMessage}">
+            Unable to complete the operation.
+        </div>
+
+
+        <!-- Treatment table -->
+        <div class="appointment-table-wrapper"
+             th:if="${treatments != null and !treatments.empty}">
+
+            <table class="appointment-table">
+
+                <thead>
+
+                <tr>
+                    <th>Treatment</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Duration</th>
+                    <th>Base price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="treatment : ${treatments}">
+
+                    <!-- Code -->
+                    <td>
+
+                        <strong class="appointment-number"
+                                th:text="${treatment.treatmentCode}">
+                            TRT-001
+                        </strong>
+
+                    </td>
+
+
+                    <!-- Name -->
+                    <td>
+
+                        <strong th:text="${treatment.treatmentName}">
+                            Dental Examination
+                        </strong>
+
+                    </td>
+
+
+                    <!-- Description -->
+                    <td th:text="${treatment.description != null
+                                and !treatment.description.isBlank()
+                                ? treatment.description
+                                : '-'}">
+
+                        General dental examination.
+
+                    </td>
+
+
+                    <!-- Duration -->
+                    <td>
+
+                        <span th:text="${treatment.estimatedDurationMinutes}">
+                            30
+                        </span>
+
+                        <span> min</span>
+
+                    </td>
+
+
+                    <!-- Base price -->
+                    <td th:text="${'LKR ' +
+                           #numbers.formatDecimal(
+                               treatment.basePrice,
+                               1,
+                               2
+                           )}">
+                        LKR 2500.00
+                    </td>
+
+
+                    <!-- Status -->
+                    <td>
+
+                        <span class="dentist-status active"
+                              th:if="${treatment.active}">
+                            ACTIVE
+                        </span>
+
+                        <span class="dentist-status inactive"
+                              th:unless="${treatment.active}">
+                            INACTIVE
+                        </span>
+
+                    </td>
+
+
+                    <!-- Actions -->
+                    <td>
+
+                        <div class="dentist-actions">
+
+                            <a th:href="@{/treatments/{id}/edit(id=${treatment.id})}"
+                               class="table-action">
+                                Edit
+                            </a>
+
+
+                            <!-- Deactivate -->
+                            <form th:if="${treatment.active}"
+                                  th:action="@{/treatments/{id}/deactivate(id=${treatment.id})}"
+                                  method="post">
+
+                                <input type="hidden"
+                                       th:name="${_csrf.parameterName}"
+                                       th:value="${_csrf.token}">
+
+                                <button type="submit"
+                                        class="table-action danger"
+                                        onclick="return confirm('Deactivate this treatment?');">
+                                    Deactivate
+                                </button>
+
+                            </form>
+
+
+                            <!-- Activate -->
+                            <form th:unless="${treatment.active}"
+                                  th:action="@{/treatments/{id}/activate(id=${treatment.id})}"
+                                  method="post">
+
+                                <input type="hidden"
+                                       th:name="${_csrf.parameterName}"
+                                       th:value="${_csrf.token}">
+
+                                <button type="submit"
+                                        class="table-action activate">
+                                    Activate
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Empty state -->
+        <div class="appointment-empty"
+             th:if="${treatments == null or treatments.empty}">
+
+            <div class="appointment-empty-icon">
+                TR
+            </div>
+
+            <h3>No treatments found</h3>
+
+
+            <p th:if="${search == null or search.isBlank()}">
+
+                There are currently no treatment records.
+                Add the first treatment to begin.
+
+            </p>
+
+
+            <p th:unless="${search == null or search.isBlank()}">
+
+                No treatments matched your search.
+
+            </p>
+
+
+            <a th:href="@{/treatments/new}"
+               class="btn btn-primary">
+                Add treatment
+            </a>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <nav class="appointment-pagination"
+             th:if="${treatmentPage != null
+                     and treatmentPage.totalPages > 1}">
+
+            <a th:if="${treatmentPage.hasPrevious()}"
+               th:href="@{/treatments(
+                    page=${treatmentPage.number - 1},
+                    search=${search}
+               )}"
+               class="btn btn-secondary">
+                Previous
+            </a>
+
+
+            <span>
+
+                Page
+
+                <strong th:text="${treatmentPage.number + 1}">
+                    1
+                </strong>
+
+                of
+
+                <strong th:text="${treatmentPage.totalPages}">
+                    1
+                </strong>
+
+            </span>
+
+
+            <a th:if="${treatmentPage.hasNext()}"
+               th:href="@{/treatments(
+                    page=${treatmentPage.number + 1},
+                    search=${search}
+               )}"
+               class="btn btn-secondary">
+                Next
+            </a>
+
+        </nav>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

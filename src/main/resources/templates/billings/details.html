@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Billing Details | Sunrise Dental Clinic</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/app.css}">
+
+</head>
+
+
+<body class="appointment-page billing-page">
+
+<main class="appointment-container">
+
+
+  <!-- HEADER -->
+  <section class="appointment-hero">
+
+    <div>
+
+      <p class="eyebrow">
+        BILLING MANAGEMENT
+      </p>
+
+      <h1>
+        Billing details
+      </h1>
+
+      <p class="appointment-hero-description">
+        Review payment information and outstanding balance.
+      </p>
+
+    </div>
+
+
+    <div class="appointment-hero-actions">
+
+      <a class="secondary-button"
+         th:href="@{/billings}">
+        Back to billing
+      </a>
+
+      <a class="primary-button"
+         th:href="@{/appointments/{id}(id=${billing.appointment.id})}">
+        View appointment
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- MAIN DETAILS -->
+  <section class="appointment-details-card">
+
+
+    <!-- MESSAGES -->
+
+    <div class="appointment-alert success"
+         th:if="${successMessage != null}"
+         th:text="${successMessage}">
+      Payment recorded successfully.
+    </div>
+
+
+    <div class="appointment-alert error"
+         th:if="${errorMessage != null}"
+         th:text="${errorMessage}">
+      Unable to record payment.
+    </div>
+
+
+    <!-- BILLING RECORD HEADER -->
+
+    <div class="appointment-record-header">
+
+      <div class="appointment-record-icon">
+        BL
+      </div>
+
+
+      <div class="appointment-record-title">
+
+        <p class="eyebrow">
+          BILLING RECORD
+        </p>
+
+
+        <h2 th:text="${billing.billingNumber}">
+          BIL-0001
+        </h2>
+
+
+        <p th:text="${#strings.replace(billing.paymentStatus.name(), '_', ' ')}">
+          UNPAID
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- APPOINTMENT -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            APPOINTMENT
+          </p>
+
+          <h3>
+            Appointment information
+          </h3>
+
+        </div>
+
+      </div>
+
+
+      <div class="appointment-details-grid">
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Appointment number
+                    </span>
+
+          <strong th:text="${billing.appointment.appointmentNumber}">
+            Appointment
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Appointment date
+                    </span>
+
+          <strong th:text="${billing.appointment.appointmentDate}">
+            Date
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Patient
+                    </span>
+
+          <strong th:text="${billing.appointment.patient.fullName}">
+            Patient
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Dentist
+                    </span>
+
+          <strong th:text="${billing.appointment.dentist.fullName}">
+            Dentist
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Treatment
+                    </span>
+
+          <strong th:text="${billing.appointment.treatment.treatmentName}">
+            Treatment
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PAYMENT SUMMARY -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            PAYMENT
+          </p>
+
+          <h3>
+            Payment summary
+          </h3>
+
+        </div>
+
+      </div>
+
+
+      <div class="appointment-details-grid">
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Total amount
+                    </span>
+
+          <strong th:text="${'LKR ' + #numbers.formatDecimal(billing.totalAmount, 1, 2)}">
+            LKR 0.00
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Amount paid
+                    </span>
+
+          <strong th:text="${'LKR ' + #numbers.formatDecimal(billing.amountPaid, 1, 2)}">
+            LKR 0.00
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Outstanding balance
+                    </span>
+
+          <strong th:text="${'LKR ' + #numbers.formatDecimal(billing.balance, 1, 2)}">
+            LKR 0.00
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Payment status
+                    </span>
+
+          <strong th:text="${#strings.replace(billing.paymentStatus.name(), '_', ' ')}">
+            UNPAID
+          </strong>
+
+        </div>
+
+
+        <div class="appointment-detail-box">
+
+                    <span class="detail-label">
+                        Last payment method
+                    </span>
+
+          <strong th:if="${billing.paymentMethod != null}"
+                  th:text="${#strings.replace(billing.paymentMethod.name(), '_', ' ')}">
+            CASH
+          </strong>
+
+          <strong th:if="${billing.paymentMethod == null}">
+            Not recorded
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RECORD PAYMENT -->
+
+    <div class="appointment-details-section"
+         th:if="${billing.paymentStatus.name() != 'PAID'}">
+
+      <div class="appointment-details-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            PAYMENT ENTRY
+          </p>
+
+          <h3>
+            Record payment
+          </h3>
+
+        </div>
+
+      </div>
+
+
+      <form th:action="@{/billings/{id}/payment(id=${billing.id})}"
+            method="post"
+            class="billing-payment-form">
+
+
+        <div class="billing-payment-grid">
+
+
+          <div class="billing-payment-field">
+
+            <label for="paymentAmount">
+              Payment amount (LKR)
+            </label>
+
+            <input id="paymentAmount"
+                   type="number"
+                   name="paymentAmount"
+                   min="0.01"
+                   step="0.01"
+                   th:max="${billing.balance}"
+                   required>
+
+            <small>
+              Maximum:
+              LKR
+              <span th:text="${#numbers.formatDecimal(billing.balance, 1, 2)}">
+                                0.00
+                            </span>
+            </small>
+
+          </div>
+
+
+          <div class="billing-payment-field">
+
+            <label for="paymentMethod">
+              Payment method
+            </label>
+
+            <select id="paymentMethod"
+                    name="paymentMethod"
+                    required>
+
+              <option value="">
+                Select payment method
+              </option>
+
+              <option th:each="method : ${paymentMethods}"
+                      th:value="${method}"
+                      th:text="${#strings.replace(method.name(), '_', ' ')}">
+                CASH
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <div class="billing-payment-actions">
+
+          <button type="submit"
+                  class="primary-button">
+            Record payment
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+
+    <!-- FULLY PAID -->
+
+    <div class="billing-paid-message"
+         th:if="${billing.paymentStatus.name() == 'PAID'}">
+
+      <strong>
+        Payment completed
+      </strong>
+
+      <span>
+                This billing record has been fully paid.
+            </span>
+
+    </div>
+
+
+    <!-- NOTES -->
+
+    <div class="appointment-details-section">
+
+      <div class="appointment-details-section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            NOTES
+          </p>
+
+          <h3>
+            Billing notes
+          </h3>
+
+        </div>
+
+      </div>
+
+
+      <div class="appointment-notes-box">
+
+                <span th:if="${billing.notes != null}"
+                      th:text="${billing.notes}">
+                    Notes
+                </span>
+
+        <span th:if="${billing.notes == null}">
+                    No additional billing notes were recorded.
+                </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="appointment-details-actions">
+
+      <a class="secondary-button"
+         th:href="@{/billings}">
+        Back to billing
+      </a>
+
+      <a class="primary-button"
+         th:href="@{/appointments/{id}(id=${billing.appointment.id})}">
+        View appointment
+      </a>
+
+    </div>
+
+
+  </section>
+
+</main>
+
+</body>
+
+</html>

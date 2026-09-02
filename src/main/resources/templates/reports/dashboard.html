@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | Sunrise Dental Clinic</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body class="appointment-page reports-page">
+
+<main class="appointment-container">
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="appointment-hero">
+
+        <div>
+
+            <p class="eyebrow">
+                REPORTS & ANALYTICS
+            </p>
+
+            <h1>
+                Clinic reports
+            </h1>
+
+            <p class="appointment-hero-description">
+                Review appointment activity, financial performance,
+                dentist workload and treatment usage.
+            </p>
+
+        </div>
+
+
+        <div class="appointment-hero-actions">
+
+            <a th:href="@{/dashboard}"
+               class="secondary-button">
+                Back to dashboard
+            </a>
+
+            <a th:href="@{/billings}"
+               class="primary-button">
+                View billing
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         APPOINTMENT OVERVIEW
+         ===================================================== -->
+
+    <section class="report-section">
+
+        <div class="report-section-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    CLINIC ACTIVITY
+                </p>
+
+                <h2>
+                    Appointment overview
+                </h2>
+
+                <p>
+                    Current appointment activity across the clinic.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="report-summary-grid">
+
+
+            <article class="report-summary-card">
+
+                <div class="report-summary-icon">
+                    AP
+                </div>
+
+                <span class="report-summary-label">
+                    Total appointments
+                </span>
+
+                <strong class="report-summary-value"
+                        th:text="${totalAppointments}">
+                    0
+                </strong>
+
+                <span class="report-summary-note">
+                    All appointment records
+                </span>
+
+            </article>
+
+
+
+            <article class="report-summary-card">
+
+                <div class="report-summary-icon">
+                    SC
+                </div>
+
+                <span class="report-summary-label">
+                    Scheduled
+                </span>
+
+                <strong class="report-summary-value"
+                        th:text="${scheduledAppointments}">
+                    0
+                </strong>
+
+                <span class="report-summary-note">
+                    Upcoming appointments
+                </span>
+
+            </article>
+
+
+
+            <article class="report-summary-card">
+
+                <div class="report-summary-icon">
+                    CP
+                </div>
+
+                <span class="report-summary-label">
+                    Completed
+                </span>
+
+                <strong class="report-summary-value"
+                        th:text="${completedAppointments}">
+                    0
+                </strong>
+
+                <span class="report-summary-note">
+                    Completed appointments
+                </span>
+
+            </article>
+
+
+
+            <article class="report-summary-card">
+
+                <div class="report-summary-icon">
+                    CN
+                </div>
+
+                <span class="report-summary-label">
+                    Cancelled
+                </span>
+
+                <strong class="report-summary-value"
+                        th:text="${cancelledAppointments}">
+                    0
+                </strong>
+
+                <span class="report-summary-note">
+                    Cancelled appointments
+                </span>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FINANCIAL OVERVIEW
+         ===================================================== -->
+
+    <section class="report-section">
+
+        <div class="report-section-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    FINANCIAL PERFORMANCE
+                </p>
+
+                <h2>
+                    Revenue overview
+                </h2>
+
+                <p>
+                    Billing, collection and outstanding payment summary.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="report-finance-grid">
+
+
+            <article class="report-finance-card">
+
+                <span class="report-summary-label">
+                    Total billed
+                </span>
+
+                <strong class="report-finance-value"
+                        th:text="${'LKR ' + #numbers.formatDecimal(totalBilledAmount, 1, 2)}">
+                    LKR 0.00
+                </strong>
+
+                <span class="report-summary-note">
+                    Total value of all billing records
+                </span>
+
+            </article>
+
+
+
+            <article class="report-finance-card">
+
+                <span class="report-summary-label">
+                    Total collected
+                </span>
+
+                <strong class="report-finance-value"
+                        th:text="${'LKR ' + #numbers.formatDecimal(totalCollectedAmount, 1, 2)}">
+                    LKR 0.00
+                </strong>
+
+                <span class="report-summary-note">
+                    Payments received
+                </span>
+
+            </article>
+
+
+
+            <article class="report-finance-card">
+
+                <span class="report-summary-label">
+                    Outstanding balance
+                </span>
+
+                <strong class="report-finance-value"
+                        th:text="${'LKR ' + #numbers.formatDecimal(outstandingAmount, 1, 2)}">
+                    LKR 0.00
+                </strong>
+
+                <span class="report-summary-note">
+                    Amount still to be collected
+                </span>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         BILLING STATUS
+         ===================================================== -->
+
+    <section class="report-section">
+
+        <div class="report-section-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    PAYMENT STATUS
+                </p>
+
+                <h2>
+                    Billing overview
+                </h2>
+
+                <p>
+                    Current payment status of clinic billing records.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="report-payment-grid">
+
+
+            <article class="report-payment-card">
+
+                <span class="report-payment-title">
+                    Total bills
+                </span>
+
+                <strong th:text="${totalBillings}">
+                    0
+                </strong>
+
+            </article>
+
+
+
+            <article class="report-payment-card report-payment-paid">
+
+                <span class="report-payment-title">
+                    Paid
+                </span>
+
+                <strong th:text="${paidBillings}">
+                    0
+                </strong>
+
+            </article>
+
+
+
+            <article class="report-payment-card report-payment-partial">
+
+                <span class="report-payment-title">
+                    Partially paid
+                </span>
+
+                <strong th:text="${partiallyPaidBillings}">
+                    0
+                </strong>
+
+            </article>
+
+
+
+            <article class="report-payment-card report-payment-unpaid">
+
+                <span class="report-payment-title">
+                    Unpaid
+                </span>
+
+                <strong th:text="${unpaidBillings}">
+                    0
+                </strong>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PERFORMANCE TABLES
+         ===================================================== -->
+
+    <section class="report-section">
+
+        <div class="report-section-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    PERFORMANCE
+                </p>
+
+                <h2>
+                    Clinic performance
+                </h2>
+
+                <p>
+                    Compare dentist workload and treatment demand.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="report-table-grid">
+
+
+            <!-- DENTIST WORKLOAD -->
+
+            <div class="report-table-card">
+
+                <div class="report-table-heading">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            DENTISTS
+                        </p>
+
+                        <h3>
+                            Dentist workload
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="appointment-table-wrapper"
+                     th:if="${dentistWorkload != null and !dentistWorkload.empty}">
+
+                    <table class="appointment-table">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Dentist
+                            </th>
+
+                            <th>
+                                Appointments
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                        <tr th:each="item : ${dentistWorkload}">
+
+                            <td>
+
+                                <strong th:text="${item.dentistName}">
+                                    Dentist
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="report-count-badge"
+                                      th:text="${item.appointmentCount}">
+                                    0
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="report-empty"
+                     th:if="${dentistWorkload == null or dentistWorkload.empty}">
+
+                    No dentist workload data available.
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TREATMENT USAGE -->
+
+            <div class="report-table-card">
+
+                <div class="report-table-heading">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            TREATMENTS
+                        </p>
+
+                        <h3>
+                            Treatment usage
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="appointment-table-wrapper"
+                     th:if="${treatmentUsage != null and !treatmentUsage.empty}">
+
+                    <table class="appointment-table">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Treatment
+                            </th>
+
+                            <th>
+                                Appointments
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                        <tr th:each="item : ${treatmentUsage}">
+
+                            <td>
+
+                                <strong th:text="${item.treatmentName}">
+                                    Treatment
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="report-count-badge"
+                                      th:text="${item.appointmentCount}">
+                                    0
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="report-empty"
+                     th:if="${treatmentUsage == null or treatmentUsage.empty}">
+
+                    No treatment usage data available.
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         BOTTOM ACTIONS
+         ===================================================== -->
+
+    <section class="report-bottom-actions">
+
+        <a th:href="@{/appointments}"
+           class="secondary-button">
+            View appointments
+        </a>
+
+        <a th:href="@{/billings}"
+           class="primary-button">
+            View billing
+        </a>
+
+    </section>
+
+
+</main>
+
+</body>
+
+</html>

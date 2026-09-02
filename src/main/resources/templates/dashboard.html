@@ -77,50 +77,105 @@
                 <span class="module-status">Open patient management</span>
             </a>
 
-            <article class="module-card">
-                <div class="module-icon">AP</div>
-                <h3>Appointments</h3>
+            <a class="module-card module-card-link"
+               th:href="@{/appointments}">
+
+                <div class="module-icon">
+                    AP
+                </div>
+
+                <h3>
+                    Appointments
+                </h3>
+
                 <p>
                     Schedule, update and monitor dental appointments.
                 </p>
-                <span class="module-status">Coming soon</span>
-            </article>
 
-            <article class="module-card">
-                <div class="module-icon">DR</div>
-                <h3>Dentists</h3>
-                <p>
-                    Organise dentist availability, specialities and workloads.
-                </p>
-                <span class="module-status">Coming soon</span>
-            </article>
+                <span class="module-status">
+        Open appointment management
+    </span>
+            </a>
+                <a th:href="@{/dentists}"
+                   class="module-card">
 
-            <article class="module-card">
-                <div class="module-icon">TR</div>
-                <h3>Treatments</h3>
-                <p>
-                    Maintain available treatments, durations and clinic prices.
-                </p>
-                <span class="module-status">Coming soon</span>
-            </article>
+                    <div class="module-icon">
+                        DR
+                    </div>
 
-            <article class="module-card">
-                <div class="module-icon">BL</div>
-                <h3>Billing</h3>
+                    <h3>Dentists</h3>
+
+                    <p>
+                        Organize dentist availability,
+                        specialties and workloads.
+                    </p>
+
+                    <span class="module-link">
+        OPEN DENTIST MANAGEMENT
+    </span>
+
+                </a>
+
+                <a th:href="@{/treatments}"
+                   class="module-card">
+
+                    <div class="module-icon">
+                        TR
+                    </div>
+
+                    <h3>Treatments</h3>
+
+                    <p>
+                        Maintain available treatments, durations and clinic prices.
+                    </p>
+
+                    <span class="module-link">
+        OPEN TREATMENT MANAGEMENT
+    </span>
+
+                </a>
+
+            <a class="module-card module-card-link"
+               th:href="@{/billings}">
+
+                <div class="module-icon">
+                    BL
+                </div>
+
+                <h3>
+                    Billing
+                </h3>
+
                 <p>
                     Record treatment charges and monitor payment information.
                 </p>
-                <span class="module-status">Coming soon</span>
-            </article>
 
-            <article class="module-card">
-                <div class="module-icon">RP</div>
-                <h3>Reports</h3>
+                <span class="module-link">
+        OPEN BILLING MANAGEMENT
+    </span>
+
+            </a>
+
+            <a class="module-card module-card-link"
+               th:href="@{/reports}">
+
+                <div class="module-icon">
+                    RP
+                </div>
+
+                <h3>
+                    Reports
+                </h3>
+
                 <p>
                     Review appointments, workload, treatment and revenue data.
                 </p>
-                <span class="module-status">Coming soon</span>
-            </article>
+
+                <span class="module-link">
+        OPEN REPORTS MANAGEMENT
+    </span>
+
+            </a>
 
         </div>
     </section>
