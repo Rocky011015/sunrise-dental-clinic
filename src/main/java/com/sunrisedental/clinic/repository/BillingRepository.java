@@ -1,6 +1,7 @@
 package com.sunrisedental.clinic.repository;
 
 import com.sunrisedental.clinic.domain.Billing;
+import com.sunrisedental.clinic.domain.PaymentStatus;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface BillingRepository
@@ -16,9 +18,9 @@ public interface BillingRepository
 
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * FIND ALL
-     * ---------------------------------------------------------
+     * =========================================================
      */
 
     @Override
@@ -33,9 +35,9 @@ public interface BillingRepository
 
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * FIND BY ID
-     * ---------------------------------------------------------
+     * =========================================================
      */
 
     @Override
@@ -50,9 +52,9 @@ public interface BillingRepository
 
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * FIND BY BILLING NUMBER
-     * ---------------------------------------------------------
+     * =========================================================
      */
 
     @EntityGraph(attributePaths = {
@@ -68,9 +70,9 @@ public interface BillingRepository
 
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * FIND BY APPOINTMENT
-     * ---------------------------------------------------------
+     * =========================================================
      */
 
     @EntityGraph(attributePaths = {
@@ -86,9 +88,9 @@ public interface BillingRepository
 
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * DUPLICATE CHECKS
-     * ---------------------------------------------------------
+     * =========================================================
      */
 
     boolean existsByBillingNumberIgnoreCase(
@@ -102,9 +104,9 @@ public interface BillingRepository
 
 
     /*
-     * ---------------------------------------------------------
+     * =========================================================
      * SEARCH
-     * ---------------------------------------------------------
+     * =========================================================
      */
 
     @EntityGraph(attributePaths = {
@@ -133,4 +135,47 @@ public interface BillingRepository
             @Param("search") String search,
             Pageable pageable
     );
+
+
+    /*
+     * =========================================================
+     * REPORTS - PAYMENT STATUS COUNTS
+     * =========================================================
+     */
+
+    long countByPaymentStatus(
+            PaymentStatus paymentStatus
+    );
+
+
+    /*
+     * =========================================================
+     * REPORTS - TOTAL BILLED
+     * =========================================================
+     */
+
+    @Query("""
+            SELECT COALESCE(
+                SUM(b.totalAmount),
+                0
+            )
+            FROM Billing b
+            """)
+    BigDecimal getTotalBilledAmount();
+
+
+    /*
+     * =========================================================
+     * REPORTS - TOTAL COLLECTED
+     * =========================================================
+     */
+
+    @Query("""
+            SELECT COALESCE(
+                SUM(b.amountPaid),
+                0
+            )
+            FROM Billing b
+            """)
+    BigDecimal getTotalCollectedAmount();
 }

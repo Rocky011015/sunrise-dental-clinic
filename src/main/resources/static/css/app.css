@@ -2807,3 +2807,375 @@ body {
     }
 
 }
+
+/* =========================================================
+   REPORTS MANAGEMENT
+   ========================================================= */
+
+.reports-page .appointment-container {
+    padding-bottom: 48px;
+}
+
+
+.report-section {
+    margin-top: 18px;
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9e5ee;
+    border-radius: 14px;
+
+    box-shadow:
+        0 14px 35px rgba(15, 41, 66, 0.06);
+}
+
+
+.report-section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 18px;
+}
+
+
+.report-section-heading h2 {
+    margin: 4px 0 4px;
+
+    color: #102a43;
+
+    font-size: 1.25rem;
+}
+
+
+.report-section-heading p:not(.eyebrow) {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 0.84rem;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.report-summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.report-summary-card {
+    min-height: 150px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 17px;
+
+    border: 1px solid #dce7ef;
+    border-radius: 12px;
+
+    background: #f8fbfd;
+}
+
+
+.report-summary-icon {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+    border-radius: 9px;
+
+    background: #dff7f3;
+
+    color: #087f75;
+
+    font-size: 0.72rem;
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+}
+
+
+.report-summary-label {
+    color: #52677a;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+
+.report-summary-value {
+    margin-top: 5px;
+
+    color: #102a43;
+
+    font-size: 2rem;
+    line-height: 1;
+}
+
+
+.report-summary-note {
+    margin-top: auto;
+    padding-top: 12px;
+
+    color: #7b8da0;
+
+    font-size: 0.74rem;
+}
+
+
+/* =========================================================
+   FINANCIAL CARDS
+   ========================================================= */
+
+.report-finance-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.report-finance-card {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 130px;
+
+    padding: 18px;
+
+    border: 1px solid #dce7ef;
+    border-radius: 12px;
+
+    background: #f8fbfd;
+}
+
+
+.report-finance-value {
+    margin-top: 8px;
+
+    color: #0d847b;
+
+    font-size: 1.35rem;
+}
+
+
+/* =========================================================
+   PAYMENT STATUS
+   ========================================================= */
+
+.report-payment-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+.report-payment-card {
+    padding: 17px;
+
+    border: 1px solid #dce7ef;
+    border-radius: 11px;
+
+    background: #f8fbfd;
+}
+
+
+.report-payment-card strong {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #102a43;
+
+    font-size: 1.55rem;
+}
+
+
+.report-payment-title {
+    color: #52677a;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+
+.report-payment-paid {
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+
+
+.report-payment-partial {
+    border-color: #fde68a;
+    background: #fffbeb;
+}
+
+
+.report-payment-unpaid {
+    border-color: #fecaca;
+    background: #fff5f5;
+}
+
+
+/* =========================================================
+   REPORT TABLES
+   ========================================================= */
+
+.report-table-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.report-table-card {
+    min-width: 0;
+
+    padding: 16px;
+
+    border: 1px solid #dce7ef;
+    border-radius: 12px;
+
+    background: #ffffff;
+}
+
+
+.report-table-heading {
+    margin-bottom: 13px;
+}
+
+
+.report-table-heading h3 {
+    margin: 3px 0 0;
+
+    color: #102a43;
+
+    font-size: 1rem;
+}
+
+
+.report-count-badge {
+    min-width: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    background: #dff7f3;
+
+    color: #087f75;
+
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+
+.report-empty {
+    padding: 28px 15px;
+
+    text-align: center;
+
+    border: 1px dashed #cbdbe8;
+    border-radius: 9px;
+
+    color: #64748b;
+
+    background: #f8fbfd;
+
+    font-size: 0.82rem;
+}
+
+
+/* BOTTOM ACTIONS */
+
+.report-bottom-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+
+/* RESPONSIVE REPORTS */
+
+@media (max-width: 900px) {
+
+    .report-summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .report-finance-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .report-payment-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .report-table-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .report-summary-grid,
+    .report-payment-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .report-section {
+        padding: 16px;
+    }
+
+
+    .report-bottom-actions {
+        flex-direction: column;
+    }
+
+
+    .report-bottom-actions a {
+        width: 100%;
+        text-align: center;
+    }
+
+}
