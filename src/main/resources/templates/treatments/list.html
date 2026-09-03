@@ -18,7 +18,6 @@
 
 <main class="appointment-container">
 
-    <!-- Header -->
     <section class="appointment-hero">
 
         <div>
@@ -52,8 +51,6 @@
 
     </section>
 
-
-    <!-- Main card -->
     <section class="appointment-content">
 
         <div class="appointment-section-header">
@@ -68,8 +65,6 @@
 
             </div>
 
-
-            <!-- Search -->
             <form th:action="@{/treatments}"
                   method="get"
                   class="appointment-search">
@@ -88,24 +83,18 @@
 
         </div>
 
-
-        <!-- Success message -->
         <div class="appointment-alert success"
              th:if="${successMessage != null}"
              th:text="${successMessage}">
             Operation completed successfully.
         </div>
 
-
-        <!-- Error message -->
         <div class="appointment-alert error"
              th:if="${errorMessage != null}"
              th:text="${errorMessage}">
             Unable to complete the operation.
         </div>
 
-
-        <!-- Treatment table -->
         <div class="appointment-table-wrapper"
              th:if="${treatments != null and !treatments.empty}">
 
@@ -125,12 +114,10 @@
 
                 </thead>
 
-
                 <tbody>
 
                 <tr th:each="treatment : ${treatments}">
 
-                    <!-- Code -->
                     <td>
 
                         <strong class="appointment-number"
@@ -140,8 +127,6 @@
 
                     </td>
 
-
-                    <!-- Name -->
                     <td>
 
                         <strong th:text="${treatment.treatmentName}">
@@ -150,8 +135,6 @@
 
                     </td>
 
-
-                    <!-- Description -->
                     <td th:text="${treatment.description != null
                                 and !treatment.description.isBlank()
                                 ? treatment.description
@@ -161,8 +144,6 @@
 
                     </td>
 
-
-                    <!-- Duration -->
                     <td>
 
                         <span th:text="${treatment.estimatedDurationMinutes}">
@@ -173,8 +154,6 @@
 
                     </td>
 
-
-                    <!-- Base price -->
                     <td th:text="${'LKR ' +
                            #numbers.formatDecimal(
                                treatment.basePrice,
@@ -184,8 +163,6 @@
                         LKR 2500.00
                     </td>
 
-
-                    <!-- Status -->
                     <td>
 
                         <span class="dentist-status active"
@@ -200,8 +177,6 @@
 
                     </td>
 
-
-                    <!-- Actions -->
                     <td>
 
                         <div class="dentist-actions">
@@ -211,8 +186,6 @@
                                 Edit
                             </a>
 
-
-                            <!-- Deactivate -->
                             <form th:if="${treatment.active}"
                                   th:action="@{/treatments/{id}/deactivate(id=${treatment.id})}"
                                   method="post">
@@ -229,8 +202,6 @@
 
                             </form>
 
-
-                            <!-- Activate -->
                             <form th:unless="${treatment.active}"
                                   th:action="@{/treatments/{id}/activate(id=${treatment.id})}"
                                   method="post">
@@ -258,8 +229,6 @@
 
         </div>
 
-
-        <!-- Empty state -->
         <div class="appointment-empty"
              th:if="${treatments == null or treatments.empty}">
 
@@ -269,7 +238,6 @@
 
             <h3>No treatments found</h3>
 
-
             <p th:if="${search == null or search.isBlank()}">
 
                 There are currently no treatment records.
@@ -277,13 +245,11 @@
 
             </p>
 
-
             <p th:unless="${search == null or search.isBlank()}">
 
                 No treatments matched your search.
 
             </p>
-
 
             <a th:href="@{/treatments/new}"
                class="btn btn-primary">
@@ -292,8 +258,6 @@
 
         </div>
 
-
-        <!-- Pagination -->
         <nav class="appointment-pagination"
              th:if="${treatmentPage != null
                      and treatmentPage.totalPages > 1}">
@@ -306,7 +270,6 @@
                class="btn btn-secondary">
                 Previous
             </a>
-
 
             <span>
 
@@ -323,7 +286,6 @@
                 </strong>
 
             </span>
-
 
             <a th:if="${treatmentPage.hasNext()}"
                th:href="@{/treatments(

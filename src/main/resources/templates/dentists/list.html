@@ -17,7 +17,6 @@
 
 <main class="appointment-container">
 
-    <!-- Header -->
     <section class="appointment-hero">
 
         <div>
@@ -49,8 +48,6 @@
 
     </section>
 
-
-    <!-- Main card -->
     <section class="appointment-content">
 
         <div class="appointment-section-header">
@@ -63,8 +60,6 @@
                 <h2>Dentist records</h2>
             </div>
 
-
-            <!-- Search -->
             <form th:action="@{/dentists}"
                   method="get"
                   class="appointment-search">
@@ -83,16 +78,12 @@
 
         </div>
 
-
-        <!-- Success message -->
         <div class="appointment-alert success"
              th:if="${successMessage != null}"
              th:text="${successMessage}">
             Operation completed successfully.
         </div>
 
-
-        <!-- Dentist table -->
         <div class="appointment-table-wrapper"
              th:if="${dentists != null and !dentists.empty}">
 
@@ -157,7 +148,6 @@
                                 Edit
                             </a>
 
-
                             <form th:if="${dentist.active}"
                                   th:action="@{/dentists/{id}/deactivate(id=${dentist.id})}"
                                   method="post">
@@ -169,7 +159,6 @@
                                 </button>
 
                             </form>
-
 
                             <form th:unless="${dentist.active}"
                                   th:action="@{/dentists/{id}/activate(id=${dentist.id})}"
@@ -194,8 +183,6 @@
 
         </div>
 
-
-        <!-- Empty state -->
         <div class="appointment-empty"
              th:if="${dentists == null or dentists.empty}">
 
@@ -221,8 +208,6 @@
 
         </div>
 
-
-        <!-- Pagination -->
         <nav class="appointment-pagination"
              th:if="${dentists != null and dentists.totalPages > 1}">
 

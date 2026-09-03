@@ -16,13 +16,10 @@
 
 </head>
 
-
 <body class="appointment-page billing-page">
 
 <main class="appointment-container">
 
-
-  <!-- HEADER -->
   <section class="appointment-hero">
 
     <div>
@@ -41,7 +38,6 @@
 
     </div>
 
-
     <div class="appointment-hero-actions">
 
       <a class="secondary-button"
@@ -58,12 +54,7 @@
 
   </section>
 
-
-  <!-- MAIN DETAILS -->
   <section class="appointment-details-card">
-
-
-    <!-- MESSAGES -->
 
     <div class="appointment-alert success"
          th:if="${successMessage != null}"
@@ -71,15 +62,11 @@
       Payment recorded successfully.
     </div>
 
-
     <div class="appointment-alert error"
          th:if="${errorMessage != null}"
          th:text="${errorMessage}">
       Unable to record payment.
     </div>
-
-
-    <!-- BILLING RECORD HEADER -->
 
     <div class="appointment-record-header">
 
@@ -87,18 +74,15 @@
         BL
       </div>
 
-
       <div class="appointment-record-title">
 
         <p class="eyebrow">
           BILLING RECORD
         </p>
 
-
         <h2 th:text="${billing.billingNumber}">
           BIL-0001
         </h2>
-
 
         <p th:text="${#strings.replace(billing.paymentStatus.name(), '_', ' ')}">
           UNPAID
@@ -107,9 +91,6 @@
       </div>
 
     </div>
-
-
-    <!-- APPOINTMENT -->
 
     <div class="appointment-details-section">
 
@@ -129,7 +110,6 @@
 
       </div>
 
-
       <div class="appointment-details-grid">
 
         <div class="appointment-detail-box">
@@ -144,7 +124,6 @@
 
         </div>
 
-
         <div class="appointment-detail-box">
 
                     <span class="detail-label">
@@ -156,7 +135,6 @@
           </strong>
 
         </div>
-
 
         <div class="appointment-detail-box">
 
@@ -170,7 +148,6 @@
 
         </div>
 
-
         <div class="appointment-detail-box">
 
                     <span class="detail-label">
@@ -182,7 +159,6 @@
           </strong>
 
         </div>
-
 
         <div class="appointment-detail-box">
 
@@ -199,9 +175,6 @@
       </div>
 
     </div>
-
-
-    <!-- PAYMENT SUMMARY -->
 
     <div class="appointment-details-section">
 
@@ -221,7 +194,6 @@
 
       </div>
 
-
       <div class="appointment-details-grid">
 
         <div class="appointment-detail-box">
@@ -236,7 +208,6 @@
 
         </div>
 
-
         <div class="appointment-detail-box">
 
                     <span class="detail-label">
@@ -248,7 +219,6 @@
           </strong>
 
         </div>
-
 
         <div class="appointment-detail-box">
 
@@ -262,7 +232,6 @@
 
         </div>
 
-
         <div class="appointment-detail-box">
 
                     <span class="detail-label">
@@ -274,7 +243,6 @@
           </strong>
 
         </div>
-
 
         <div class="appointment-detail-box">
 
@@ -297,9 +265,6 @@
 
     </div>
 
-
-    <!-- RECORD PAYMENT -->
-
     <div class="appointment-details-section"
          th:if="${billing.paymentStatus.name() != 'PAID'}">
 
@@ -319,14 +284,11 @@
 
       </div>
 
-
       <form th:action="@{/billings/{id}/payment(id=${billing.id})}"
             method="post"
             class="billing-payment-form">
 
-
         <div class="billing-payment-grid">
-
 
           <div class="billing-payment-field">
 
@@ -351,7 +313,6 @@
             </small>
 
           </div>
-
 
           <div class="billing-payment-field">
 
@@ -379,7 +340,6 @@
 
         </div>
 
-
         <div class="billing-payment-actions">
 
           <button type="submit"
@@ -393,9 +353,6 @@
 
     </div>
 
-
-    <!-- FULLY PAID -->
-
     <div class="billing-paid-message"
          th:if="${billing.paymentStatus.name() == 'PAID'}">
 
@@ -408,9 +365,6 @@
             </span>
 
     </div>
-
-
-    <!-- NOTES -->
 
     <div class="appointment-details-section">
 
@@ -430,7 +384,6 @@
 
       </div>
 
-
       <div class="appointment-notes-box">
 
                 <span th:if="${billing.notes != null}"
@@ -446,9 +399,6 @@
 
     </div>
 
-
-    <!-- ACTIONS -->
-
     <div class="appointment-details-actions">
 
       <a class="secondary-button"
@@ -462,7 +412,6 @@
       </a>
 
     </div>
-
 
   </section>
 

@@ -62,7 +62,6 @@
 
   </section>
 
-
   <section class="appointment-form-card">
 
     <div class="appointment-form-heading">
@@ -104,16 +103,12 @@
 
     </div>
 
-
     <form class="appointment-form"
           method="post"
           th:object="${appointmentForm}"
           th:action="${editing}
                     ? @{/appointments/{id}(id=${appointment.id})}
                     : @{/appointments}">
-
-
-      <!-- GLOBAL BUSINESS / VALIDATION ERRORS -->
 
       <div class="alert alert-error"
            th:if="${#fields.hasGlobalErrors()}">
@@ -125,11 +120,7 @@
 
       </div>
 
-
       <div class="appointment-form-grid">
-
-
-        <!-- PATIENT -->
 
         <div class="appointment-field appointment-field-wide">
 
@@ -162,9 +153,6 @@
           </p>
 
         </div>
-
-
-        <!-- DENTIST -->
 
         <div class="appointment-field">
 
@@ -202,9 +190,6 @@
 
         </div>
 
-
-        <!-- TREATMENT -->
-
         <div class="appointment-field">
 
           <label for="treatmentId">
@@ -241,9 +226,6 @@
 
         </div>
 
-
-        <!-- DATE -->
-
         <div class="appointment-field">
 
           <label for="appointmentDate">
@@ -266,9 +248,6 @@
 
         </div>
 
-
-        <!-- TIME -->
-
         <div class="appointment-field">
 
           <label for="appointmentTime">
@@ -289,9 +268,6 @@
           </p>
 
         </div>
-
-
-        <!-- STATUS -->
 
         <div class="appointment-field">
 
@@ -324,9 +300,6 @@
           </p>
 
         </div>
-
-
-        <!-- NOTES -->
 
         <div class="appointment-field appointment-field-wide">
 
@@ -364,7 +337,6 @@
 
       </div>
 
-
       <div class="appointment-form-info">
 
         <div class="appointment-info-icon">
@@ -387,7 +359,6 @@
         </div>
 
       </div>
-
 
       <div class="appointment-form-actions">
 

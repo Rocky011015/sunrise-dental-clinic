@@ -50,7 +50,6 @@
 
   </section>
 
-
   <section class="appointment-details-card">
 
     <div class="appointment-alert success"
@@ -64,8 +63,6 @@
          th:text="${errorMessage}">
       Unable to complete operation.
     </div>
-
-    <!-- MAIN RECORD -->
 
     <div class="appointment-record-header">
 
@@ -91,9 +88,6 @@
 
     </div>
 
-
-    <!-- DATE / TIME -->
-
     <div class="appointment-details-section">
 
       <div class="appointment-details-section-heading">
@@ -115,7 +109,6 @@
           </strong>
         </div>
 
-
         <div class="appointment-detail-box">
                     <span class="detail-label">
                         Appointment time
@@ -129,9 +122,6 @@
       </div>
 
     </div>
-
-
-    <!-- PATIENT -->
 
     <div class="appointment-details-section">
 
@@ -154,7 +144,6 @@
           </strong>
         </div>
 
-
         <div class="appointment-detail-box">
                     <span class="detail-label">
                         Full name
@@ -165,7 +154,6 @@
           </strong>
         </div>
 
-
         <div class="appointment-detail-box">
                     <span class="detail-label">
                         Contact number
@@ -175,7 +163,6 @@
             Contact
           </strong>
         </div>
-
 
         <div class="appointment-detail-box">
                     <span class="detail-label">
@@ -190,9 +177,6 @@
       </div>
 
     </div>
-
-
-    <!-- DENTIST -->
 
     <div class="appointment-details-section">
 
@@ -215,7 +199,6 @@
           </strong>
         </div>
 
-
         <div class="appointment-detail-box">
                     <span class="detail-label">
                         Specialization
@@ -229,9 +212,6 @@
       </div>
 
     </div>
-
-
-    <!-- TREATMENT -->
 
     <div class="appointment-details-section">
 
@@ -254,7 +234,6 @@
           </strong>
         </div>
 
-
         <div class="appointment-detail-box">
                     <span class="detail-label">
                         Base price
@@ -271,9 +250,6 @@
       </div>
 
     </div>
-
-
-    <!-- NOTES -->
 
     <div class="appointment-details-section">
 
@@ -299,9 +275,6 @@
 
     </div>
 
-
-    <!-- ACTIONS -->
-
     <div class="appointment-details-actions">
 
       <a class="secondary-button"
@@ -309,14 +282,11 @@
         Back to appointments
       </a>
 
-
       <a class="primary-button"
          th:href="@{/appointments/{id}/edit(id=${appointment.id})}">
         Edit appointment
       </a>
 
-
-      <!-- CREATE BILLING -->
       <form th:if="${billing == null}"
             th:action="@{/billings/appointment/{id}(id=${appointment.id})}"
             method="post">
@@ -329,8 +299,6 @@
 
       </form>
 
-
-      <!-- VIEW EXISTING BILLING -->
       <a th:if="${billing != null}"
          class="primary-button"
          th:href="@{/billings/{id}(id=${billing.id})}">

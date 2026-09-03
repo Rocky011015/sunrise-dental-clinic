@@ -16,15 +16,9 @@
 
 </head>
 
-
 <body class="appointment-page reports-page">
 
 <main class="appointment-container">
-
-
-    <!-- =====================================================
-         HERO
-         ===================================================== -->
 
     <section class="appointment-hero">
 
@@ -45,7 +39,6 @@
 
         </div>
 
-
         <div class="appointment-hero-actions">
 
             <a th:href="@{/dashboard}"
@@ -61,12 +54,6 @@
         </div>
 
     </section>
-
-
-
-    <!-- =====================================================
-         APPOINTMENT OVERVIEW
-         ===================================================== -->
 
     <section class="report-section">
 
@@ -90,9 +77,7 @@
 
         </div>
 
-
         <div class="report-summary-grid">
-
 
             <article class="report-summary-card">
 
@@ -115,8 +100,6 @@
 
             </article>
 
-
-
             <article class="report-summary-card">
 
                 <div class="report-summary-icon">
@@ -137,8 +120,6 @@
                 </span>
 
             </article>
-
-
 
             <article class="report-summary-card">
 
@@ -161,8 +142,6 @@
 
             </article>
 
-
-
             <article class="report-summary-card">
 
                 <div class="report-summary-icon">
@@ -184,16 +163,9 @@
 
             </article>
 
-
         </div>
 
     </section>
-
-
-
-    <!-- =====================================================
-         FINANCIAL OVERVIEW
-         ===================================================== -->
 
     <section class="report-section">
 
@@ -217,9 +189,7 @@
 
         </div>
 
-
         <div class="report-finance-grid">
-
 
             <article class="report-finance-card">
 
@@ -238,8 +208,6 @@
 
             </article>
 
-
-
             <article class="report-finance-card">
 
                 <span class="report-summary-label">
@@ -256,8 +224,6 @@
                 </span>
 
             </article>
-
-
 
             <article class="report-finance-card">
 
@@ -276,16 +242,9 @@
 
             </article>
 
-
         </div>
 
     </section>
-
-
-
-    <!-- =====================================================
-         BILLING STATUS
-         ===================================================== -->
 
     <section class="report-section">
 
@@ -309,9 +268,7 @@
 
         </div>
 
-
         <div class="report-payment-grid">
-
 
             <article class="report-payment-card">
 
@@ -325,8 +282,6 @@
 
             </article>
 
-
-
             <article class="report-payment-card report-payment-paid">
 
                 <span class="report-payment-title">
@@ -338,8 +293,6 @@
                 </strong>
 
             </article>
-
-
 
             <article class="report-payment-card report-payment-partial">
 
@@ -353,8 +306,6 @@
 
             </article>
 
-
-
             <article class="report-payment-card report-payment-unpaid">
 
                 <span class="report-payment-title">
@@ -367,16 +318,9 @@
 
             </article>
 
-
         </div>
 
     </section>
-
-
-
-    <!-- =====================================================
-         PERFORMANCE TABLES
-         ===================================================== -->
 
     <section class="report-section">
 
@@ -400,11 +344,7 @@
 
         </div>
 
-
         <div class="report-table-grid">
-
-
-            <!-- DENTIST WORKLOAD -->
 
             <div class="report-table-card">
 
@@ -423,7 +363,6 @@
                     </div>
 
                 </div>
-
 
                 <div class="appointment-table-wrapper"
                      th:if="${dentistWorkload != null and !dentistWorkload.empty}">
@@ -446,7 +385,6 @@
 
                         </thead>
 
-
                         <tbody>
 
                         <tr th:each="item : ${dentistWorkload}">
@@ -458,7 +396,6 @@
                                 </strong>
 
                             </td>
-
 
                             <td>
 
@@ -477,7 +414,6 @@
 
                 </div>
 
-
                 <div class="report-empty"
                      th:if="${dentistWorkload == null or dentistWorkload.empty}">
 
@@ -486,10 +422,6 @@
                 </div>
 
             </div>
-
-
-
-            <!-- TREATMENT USAGE -->
 
             <div class="report-table-card">
 
@@ -508,7 +440,6 @@
                     </div>
 
                 </div>
-
 
                 <div class="appointment-table-wrapper"
                      th:if="${treatmentUsage != null and !treatmentUsage.empty}">
@@ -531,7 +462,6 @@
 
                         </thead>
 
-
                         <tbody>
 
                         <tr th:each="item : ${treatmentUsage}">
@@ -543,7 +473,6 @@
                                 </strong>
 
                             </td>
-
 
                             <td>
 
@@ -562,7 +491,6 @@
 
                 </div>
 
-
                 <div class="report-empty"
                      th:if="${treatmentUsage == null or treatmentUsage.empty}">
 
@@ -572,16 +500,9 @@
 
             </div>
 
-
         </div>
 
     </section>
-
-
-
-    <!-- =====================================================
-         BOTTOM ACTIONS
-         ===================================================== -->
 
     <section class="report-bottom-actions">
 
@@ -596,7 +517,6 @@
         </a>
 
     </section>
-
 
 </main>
 

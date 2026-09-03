@@ -17,19 +17,15 @@
 
     </title>
 
-
     <link rel="stylesheet"
           th:href="@{/css/app.css}">
 
 </head>
 
-
 <body class="appointment-page dentist-page treatment-page">
 
 <main class="appointment-container">
 
-
-    <!-- HERO -->
     <section class="appointment-hero">
 
         <div>
@@ -38,7 +34,6 @@
                 TREATMENT MANAGEMENT
             </p>
 
-
             <h1 th:text="${editMode}
                     ? 'Edit treatment'
                     : 'Add treatment'">
@@ -46,7 +41,6 @@
                 Add treatment
 
             </h1>
-
 
             <p th:text="${editMode}
                     ? 'Update treatment information, duration and clinic pricing.'
@@ -57,7 +51,6 @@
             </p>
 
         </div>
-
 
         <div class="appointment-hero-actions">
 
@@ -72,11 +65,7 @@
 
     </section>
 
-
-
-    <!-- FORM CARD -->
     <section class="appointment-content">
-
 
         <div class="appointment-section-header">
 
@@ -91,7 +80,6 @@
 
                 </p>
 
-
                 <h2 th:text="${editMode}
                         ? 'Treatment information'
                         : 'Register treatment'">
@@ -99,7 +87,6 @@
                     Register treatment
 
                 </h2>
-
 
                 <p class="dentist-form-help">
 
@@ -112,9 +99,6 @@
 
         </div>
 
-
-
-        <!-- FORM -->
         <form th:object="${treatment}"
               th:action="${editMode}
                     ? @{/treatments/{id}(id=${treatment.id})}
@@ -122,15 +106,10 @@
               method="post"
               class="dentist-form">
 
-
-            <!-- CSRF -->
             <input type="hidden"
                    th:name="${_csrf.parameterName}"
                    th:value="${_csrf.token}">
 
-
-
-            <!-- Global validation/business errors -->
             <div class="dentist-alert error"
                  th:if="${#fields.hasGlobalErrors()}">
 
@@ -143,12 +122,8 @@
 
             </div>
 
-
-
             <div class="dentist-form-grid">
 
-
-                <!-- Treatment code -->
                 <div class="dentist-field">
 
                     <label for="treatmentCode">
@@ -158,13 +133,11 @@
 
                     </label>
 
-
                     <input id="treatmentCode"
                            type="text"
                            th:field="*{treatmentCode}"
                            maxlength="20"
                            placeholder="Example: TRT-006">
-
 
                     <p class="dentist-error"
                        th:if="${#fields.hasErrors('treatmentCode')}"
@@ -176,9 +149,6 @@
 
                 </div>
 
-
-
-                <!-- Treatment name -->
                 <div class="dentist-field">
 
                     <label for="treatmentName">
@@ -188,13 +158,11 @@
 
                     </label>
 
-
                     <input id="treatmentName"
                            type="text"
                            th:field="*{treatmentName}"
                            maxlength="120"
                            placeholder="Example: Root Canal Treatment">
-
 
                     <p class="dentist-error"
                        th:if="${#fields.hasErrors('treatmentName')}"
@@ -206,9 +174,6 @@
 
                 </div>
 
-
-
-                <!-- Base price -->
                 <div class="dentist-field">
 
                     <label for="basePrice">
@@ -218,14 +183,12 @@
 
                     </label>
 
-
                     <input id="basePrice"
                            type="number"
                            th:field="*{basePrice}"
                            min="0"
                            step="0.01"
                            placeholder="5000.00">
-
 
                     <p class="dentist-error"
                        th:if="${#fields.hasErrors('basePrice')}"
@@ -237,9 +200,6 @@
 
                 </div>
 
-
-
-                <!-- Duration -->
                 <div class="dentist-field">
 
                     <label for="estimatedDurationMinutes">
@@ -249,14 +209,12 @@
 
                     </label>
 
-
                     <input id="estimatedDurationMinutes"
                            type="number"
                            th:field="*{estimatedDurationMinutes}"
                            min="1"
                            step="1"
                            placeholder="Example: 30">
-
 
                     <p class="dentist-error"
                        th:if="${#fields.hasErrors('estimatedDurationMinutes')}"
@@ -270,9 +228,6 @@
 
             </div>
 
-
-
-            <!-- Description -->
             <div class="dentist-field"
                  style="margin-top: 18px;">
 
@@ -282,13 +237,11 @@
 
                 </label>
 
-
                 <textarea id="description"
                           th:field="*{description}"
                           rows="5"
                           maxlength="500"
                           placeholder="Enter a short description of the treatment"></textarea>
-
 
                 <p class="dentist-error"
                    th:if="${#fields.hasErrors('description')}"
@@ -300,9 +253,6 @@
 
             </div>
 
-
-
-            <!-- Active status -->
             <div class="dentist-status-control">
 
                 <div>
@@ -311,14 +261,12 @@
                         Treatment availability
                     </strong>
 
-
                     <p>
                         Active treatments are available when
                         scheduling clinic appointments.
                     </p>
 
                 </div>
-
 
                 <input type="checkbox"
                        th:field="*{active}"
@@ -327,9 +275,6 @@
 
             </div>
 
-
-
-            <!-- Actions -->
             <div class="dentist-form-actions">
 
                 <a th:href="@{/treatments}"
@@ -338,7 +283,6 @@
                     Cancel
 
                 </a>
-
 
                 <button type="submit"
                         class="dentist-btn dentist-btn-primary"
@@ -351,7 +295,6 @@
                 </button>
 
             </div>
-
 
         </form>
 
