@@ -4784,7 +4784,7 @@ body.appointment-page {
             rgba(232, 243, 247, 0.82),
             rgba(232, 243, 247, 0.89)
         ),
-        url('/images/dashboard-bg.jpg');
+        url('/images/appointments-bg.jpg');
 }
 
 body.patient-page .page-shell,
@@ -5017,4 +5017,81 @@ body.reports-page .reports-page-shell {
 
     filter:
         drop-shadow(0 10px 22px rgba(0, 160, 180, 0.24));
+}
+
+button,
+a.primary-action,
+a.secondary-action,
+a.primary-button,
+a.secondary-button,
+input,
+select,
+textarea,
+.module-card,
+.content-panel,
+.toolbar,
+.detail-item {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 16px 32px rgba(10, 55, 78, 0.13);
+}
+
+.primary-action:hover,
+.primary-button:hover {
+    transform: translateY(-2px);
+}
+
+.secondary-action:hover,
+.secondary-button:hover {
+    transform: translateY(-2px);
+}
+
+.content-panel:hover {
+    box-shadow:
+        0 20px 44px rgba(10, 55, 78, 0.13);
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: #b7ccd8;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 4px rgba(21, 184, 169, 0.16);
+}
+
+table tbody tr {
+    transition:
+        background-color 0.18s ease;
+}
+
+table tbody tr:hover {
+    background-color: rgba(21, 184, 169, 0.045);
+}
+
+table td a {
+    transition:
+        color 0.18s ease,
+        opacity 0.18s ease;
+}
+
+table td a:hover {
+    opacity: 0.78;
 }

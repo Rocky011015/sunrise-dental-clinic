@@ -114,7 +114,7 @@
            th:if="${#fields.hasGlobalErrors()}">
 
         <p th:each="error : ${#fields.globalErrors()}"
-           th:text="${error}"
+           th:text="${error}">
           Unable to save appointment.
         </p>
 
