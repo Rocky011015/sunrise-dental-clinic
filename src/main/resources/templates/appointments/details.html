@@ -41,7 +41,8 @@
         Back to appointments
       </a>
 
-      <a class="primary-button"
+      <a th:if="${appointment.status.name() != 'CANCELLED'}"
+         class="primary-button"
          th:href="@{/appointments/{id}/edit(id=${appointment.id})}">
         Edit appointment
       </a>
@@ -282,12 +283,13 @@
         Back to appointments
       </a>
 
-      <a class="primary-button"
+      <a th:if="${appointment.status.name() != 'CANCELLED'}"
+         class="primary-button"
          th:href="@{/appointments/{id}/edit(id=${appointment.id})}">
         Edit appointment
       </a>
 
-      <form th:if="${billing == null}"
+      <form th:if="${billing == null and appointment.status.name() != 'CANCELLED'}"
             th:action="@{/billings/appointment/{id}(id=${appointment.id})}"
             method="post">
 
